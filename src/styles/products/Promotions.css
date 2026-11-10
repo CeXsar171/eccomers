@@ -1,0 +1,93 @@
+/* =========================================
+   PROMOCIONES
+========================================= */
+
+.promotions-section {
+    padding: 90px 0;
+    background: #eef4fb;
+}
+
+.promotions-section .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* TÍTULO */
+
+.promotions-section .section-title {
+    text-align: center;
+    color: #0b3d91;
+    font-size: 42px;
+    margin: 0 0 20px;
+}
+
+.promotions-section .section-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 20px;
+    margin: 0 0 55px;
+}
+
+/* =========================================
+   GRID
+========================================= */
+
+.promotions-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 30px;
+
+    width: 100%;
+
+    align-items: stretch;
+}
+
+/* =========================================
+   TARJETAS
+========================================= */
+
+.promotions-grid .product-card {
+    width: 360px !important;
+    max-width: 360px !important;
+    min-width: 0 !important;
+
+    margin: 0 !important;
+
+    box-sizing: border-box;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .promotions-section .container {
+        width: 92%;
+    }
+
+    .promotions-grid {
+        grid-template-columns: 1fr;
+
+        justify-content: center;
+    }
+
+    .promotions-grid .product-card {
+        width: 100% !important;
+        max-width: 360px !important;
+
+        justify-self: center;
+    }
+
+    .promotions-section .section-title {
+        font-size: 32px;
+    }
+
+    .promotions-section .section-subtitle {
+        font-size: 17px;
+    }
+
+}

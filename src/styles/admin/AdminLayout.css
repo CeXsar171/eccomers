@@ -1,0 +1,23 @@
+.admin-layout{
+
+display:flex;
+
+background:#F5F7FA;
+
+}
+
+.admin-content{
+
+margin-left:270px;
+
+width:calc(100% - 270px);
+
+min-height:100vh;
+
+padding:25px;
+
+transition:.3s;
+
+overflow:auto;
+
+}

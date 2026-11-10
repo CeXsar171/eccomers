@@ -1,0 +1,247 @@
+.categorias-list-container {
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  padding: 25px;
+
+  margin-top: 25px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.07);
+
+}
+
+.categorias-search {
+
+  width: 100%;
+
+  max-width: 450px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  background: #f5f7fa;
+
+  border: 1px solid #e1e5ea;
+
+  border-radius: 10px;
+
+  padding: 12px 15px;
+
+  box-sizing: border-box;
+
+  margin-bottom: 25px;
+
+}
+
+.categorias-search svg {
+
+  color: #777;
+
+}
+
+.categorias-search input {
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  width: 100%;
+
+  font-size: 15px;
+
+}
+
+.categorias-table {
+
+  width: 100%;
+
+  overflow-x: auto;
+
+}
+
+.categoria-header,
+.categoria-row {
+
+  display: grid;
+
+  grid-template-columns:
+    1.2fr
+    2fr
+    1fr
+    120px;
+
+  align-items: center;
+
+  min-width: 700px;
+
+}
+
+.categoria-header {
+
+  background: #0b3d91;
+
+  color: white;
+
+  padding: 15px;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+}
+
+.categoria-row {
+
+  padding: 18px 15px;
+
+  border-bottom: 1px solid #eeeeee;
+
+  transition: 0.2s;
+
+}
+
+.categoria-row:hover {
+
+  background: #f8fafc;
+
+}
+
+.categoria-nombre strong {
+
+  color: #222;
+
+}
+
+.categoria-descripcion {
+
+  color: #777;
+
+  font-size: 14px;
+
+}
+
+.estado {
+
+  border: none;
+
+  border-radius: 20px;
+
+  padding: 7px 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+}
+
+.estado.activo {
+
+  background: #e8f5e9;
+
+  color: #2e7d32;
+
+}
+
+.estado.inactivo {
+
+  background: #ffebee;
+
+  color: #c62828;
+
+}
+
+.categoria-acciones {
+
+  display: flex;
+
+  gap: 8px;
+
+}
+
+.categoria-acciones button {
+
+  width: 36px;
+
+  height: 36px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+}
+
+.btn-editar {
+
+  background: #e3f2fd;
+
+  color: #1565c0;
+
+}
+
+.btn-editar:hover {
+
+  background: #1565c0;
+
+  color: white;
+
+}
+
+.btn-eliminar {
+
+  background: #ffebee;
+
+  color: #c62828;
+
+}
+
+.btn-eliminar:hover {
+
+  background: #c62828;
+
+  color: white;
+
+}
+
+.categorias-empty {
+
+  padding: 50px 20px;
+
+  text-align: center;
+
+  color: #777;
+
+}
+
+@media (max-width: 700px) {
+
+  .categorias-list-container {
+
+    padding: 15px;
+
+  }
+
+}

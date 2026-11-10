@@ -1,0 +1,201 @@
+.categoria-form {
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  padding: 28px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+}
+
+.form-header {
+
+  margin-bottom: 25px;
+
+}
+
+.form-header h2 {
+
+  margin: 0;
+
+  color: #0B3D91;
+
+  font-size: 24px;
+
+}
+
+.form-header p {
+
+  margin-top: 7px;
+
+  color: #777;
+
+}
+
+.form-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  margin-bottom: 20px;
+
+}
+
+.form-group label {
+
+  font-weight: 600;
+
+  margin-bottom: 8px;
+
+  color: #333;
+
+}
+
+.form-group input,
+.form-group textarea {
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 10px;
+
+  padding: 13px 15px;
+
+  font-family: inherit;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: 0.25s;
+
+  background: #fafbfc;
+
+}
+
+.form-group textarea {
+
+  resize: vertical;
+
+  min-height: 100px;
+
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+  border-color: #1565C0;
+
+  background: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+
+}
+
+.form-error {
+
+  background: #ffebee;
+
+  color: #c62828;
+
+  border: 1px solid #ffcdd2;
+
+  padding: 12px 15px;
+
+  border-radius: 10px;
+
+  margin-bottom: 20px;
+
+}
+
+.form-actions {
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  margin-top: 25px;
+
+}
+
+.btn-guardar,
+.btn-cancelar {
+
+  border: none;
+
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: 0.25s;
+
+}
+
+.btn-guardar {
+
+  background: #F57C00;
+
+  color: white;
+
+}
+
+.btn-guardar:hover {
+
+  background: #D96D00;
+
+  transform: translateY(-2px);
+
+}
+
+.btn-cancelar {
+
+  background: #e9ecef;
+
+  color: #333;
+
+}
+
+.btn-cancelar:hover {
+
+  background: #dfe3e8;
+
+}
+
+@media (max-width: 600px) {
+
+  .categoria-form {
+
+    padding: 20px;
+
+  }
+
+  .form-actions {
+
+    flex-direction: column;
+
+  }
+
+  .btn-guardar,
+  .btn-cancelar {
+
+    width: 100%;
+
+  }
+
+}

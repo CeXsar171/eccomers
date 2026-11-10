@@ -1,0 +1,161 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:#f5f5f5;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    width:100%;
+    background:#0B3D91;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+
+.navbar-container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+    height:80px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:#fff;
+}
+
+.logo-icon{
+    font-size:40px;
+    color:#F57C00;
+}
+
+.logo h2{
+    font-size:25px;
+    font-weight:bold;
+    line-height:1.1;
+}
+
+.logo span{
+    font-size:10px;
+    color:#fff;
+}
+
+/* Menú */
+
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.nav-menu a{
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.nav-menu a:hover{
+    color:#F57C00;
+}
+
+.admin-btn{
+    background:#F57C00;
+    padding:10px 20px;
+    border-radius:8px;
+}
+
+.admin-btn:hover{
+    color:white !important;
+}
+
+/* Botón hamburguesa */
+
+.menu-btn{
+    display:none;
+    background:none;
+    border:none;
+    color:white;
+    font-size:34px;
+    cursor:pointer;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width:900px){
+
+    .navbar-container{
+        width:95%;
+        height:70px;
+    }
+
+    .logo h2{
+        font-size:18px;
+        line-height:1.2;
+    }
+
+    .logo span{
+        font-size:11px;
+    }
+
+    .logo-icon{
+        font-size:32px;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .nav-menu{
+
+        position:fixed;
+
+        top:70px;
+        left:-100%;
+
+        width:100%;
+        height:calc(100vh - 70px);
+
+        background:#0B3D91;
+
+        display:flex;
+        flex-direction:column;
+
+        align-items:center;
+
+        padding:40px 20px;
+
+        gap:30px;
+
+        transition:left .3s ease;
+
+    }
+
+    .nav-menu.active{
+        left:0;
+    }
+
+    .nav-menu a{
+        font-size:26px;
+    }
+
+    .admin-btn{
+        width:220px;
+        text-align:center;
+    }
+
+}

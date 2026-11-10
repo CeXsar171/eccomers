@@ -1,0 +1,96 @@
+.products-section {
+    padding: 80px 0;
+    background: #ffffff;
+}
+
+.products-section .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* TÍTULO */
+
+.products-section .section-title {
+    text-align: center;
+
+    color: #0b3d91;
+
+    font-size: 42px;
+
+    margin-bottom: 50px;
+}
+
+/* ================================
+   GRID DE PRODUCTOS
+================================ */
+
+.products-section .products-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 30px;
+
+    width: 100%;
+
+    align-items: stretch;
+}
+
+/* ================================
+   TARJETA
+================================ */
+
+.products-section .products-grid .product-card {
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    min-width: 0 !important;
+
+    margin: 0 !important;
+
+    box-sizing: border-box;
+}
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 1000px) {
+
+    .products-section .products-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+}
+
+/* ================================
+   CELULAR
+================================ */
+
+@media (max-width: 650px) {
+
+    .products-section .container {
+
+        width: 92%;
+
+    }
+
+    .products-section .products-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .products-section .section-title {
+
+        font-size: 32px;
+
+    }
+
+}

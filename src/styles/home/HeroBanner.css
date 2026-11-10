@@ -1,0 +1,135 @@
+.hero{
+
+    width:100%;
+
+    height:650px;
+
+    background-image:url("https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1800&q=80");
+
+    background-size:cover;
+
+    background-position:center;
+
+    position:relative;
+
+}
+
+.overlay{
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(5,25,55,.65);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.hero-content{
+
+    width:90%;
+
+    max-width:1200px;
+
+    color:white;
+
+}
+
+.subtitle{
+
+    background:#F57C00;
+
+    padding:10px 18px;
+
+    border-radius:50px;
+
+    font-weight:bold;
+
+    display:inline-block;
+
+    margin-bottom:25px;
+
+}
+
+.hero h1{
+
+    font-size:65px;
+
+    line-height:75px;
+
+    margin-bottom:30px;
+
+}
+
+.hero p{
+
+    width:600px;
+
+    max-width:100%;
+
+    font-size:22px;
+
+    line-height:35px;
+
+    margin-bottom:45px;
+
+}
+
+.hero-btn{
+
+    background:#F57C00;
+
+    color:white;
+
+    padding:18px 45px;
+
+    text-decoration:none;
+
+    border-radius:8px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.hero-btn:hover{
+
+    background:#ff9800;
+
+    transform:translateY(-4px);
+
+}
+
+@media(max-width:900px){
+
+.hero{
+
+height:550px;
+
+}
+
+.hero h1{
+
+font-size:42px;
+
+line-height:50px;
+
+}
+
+.hero p{
+
+font-size:18px;
+
+line-height:30px;
+
+}
+
+}
