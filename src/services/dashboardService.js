@@ -6,25 +6,25 @@ import {
   limit
 } from "firebase/firestore";
 
-import db from "../firebase/firestore";
+import { db } from "../firebase/config";
 
 export async function getDashboardData() {
 
   // Productos
-  const productosSnap = await getDocs(collection(db, "products"));
+  const productosSnap = await getDocs(collection(db, "productos"));
 
   // Categorías
-  const categoriasSnap = await getDocs(collection(db, "categories"));
+  const categoriasSnap = await getDocs(collection(db, "categorias"));
 
   // Promociones
   const promociones = productosSnap.docs.filter(
-    (doc) => doc.data().promotion === true
+    (doc) => doc.data().promocion === true
   );
 
   // Últimos productos
   const q = query(
-    collection(db, "products"),
-    orderBy("createdAt", "desc"),
+    collection(db, "productos"),
+    orderBy("fechaCreacion", "desc"),
     limit(5)
   );
 

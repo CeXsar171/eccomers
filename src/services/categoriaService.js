@@ -30,6 +30,7 @@ export const crearCategoria = async (categoria) => {
     const nuevaCategoria = {
       nombre: nombre,
       descripcion: descripcion,
+      imagen: categoria?.imagen || "",
       estado: true,
       fechaCreacion: serverTimestamp()
     };
@@ -125,7 +126,9 @@ export const editarCategoria = async (
       {
         nombre: datos.nombre.trim(),
         descripcion:
-          datos.descripcion?.trim() || ""
+          datos.descripcion?.trim() || "",
+        imagen:
+          datos.imagen || ""
       }
     );
 

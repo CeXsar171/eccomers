@@ -26,6 +26,10 @@ function LoginForm() {
       console.error(err);
 
       switch (err.code) {
+        case "app/not-admin":
+          setError("Esta cuenta no tiene permiso de administrador.");
+          break;
+
         case "auth/invalid-credential":
           setError("Correo o contraseña incorrectos.");
           break;

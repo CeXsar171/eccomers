@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -11,6 +11,7 @@ import Productos from "../pages/admin/Productos";
 import Categorias from "../pages/admin/Categorias";
 import Promociones from "../pages/admin/Promociones";
 import NuevoProducto from "../pages/admin/NuevoProducto";
+import EditarProducto from "../pages/admin/EditarProducto";
 
 import ProtectedRoute from "../components/auth/ProtectedRoute";
 
@@ -70,6 +71,18 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/admin/editar/:id"
+          element={
+            <ProtectedRoute>
+              <EditarProducto />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Cualquier ruta desconocida vuelve al inicio */}
+        <Route path="*" element={<Navigate to="/" replace />} />
 
       </Routes>
  

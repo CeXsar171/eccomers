@@ -1,37 +1,64 @@
 import { motion } from "framer-motion";
+import { FaTools } from "react-icons/fa";
+
 import "../../styles/home/CategoryCard.css";
 
-function CategoryCard({category}){
+// Categoría guardada en Firestore: { nombre, descripcion, imagen }
+function CategoryCard({ category, activa, onSelect }) {
 
-return(
+  return (
 
-<motion.div
+    <motion.button
 
-className="category-card"
+      type="button"
 
-whileHover={{scale:1.05}}
+      className={
+        activa
+          ? "category-card activa"
+          : "category-card"
+      }
 
-transition={{duration:.3}}
+      onClick={() => onSelect(category)}
 
->
+      whileHover={{ y: -4 }}
 
-<img
+      whileTap={{ scale: 0.97 }}
 
-src={category.image}
+      transition={{ duration: 0.2 }}
 
-alt={category.name}
+      aria-pressed={activa}
 
-/>
+    >
 
-<div className="category-info">
+      {category.imagen ? (
 
-<h3>{category.name}</h3>
+        <img
+          src={category.imagen}
+          alt=""
+          loading="lazy"
+        />
 
-</div>
+      ) : (
 
-</motion.div>
+        <span className="category-sin-imagen">
+          <FaTools />
+        </span>
 
-)
+      )}
+
+      <span className="category-info">
+
+        <h3>{category.nombre}</h3>
+
+        <small>
+          {activa ? "Mostrando productos" : "Ver productos"}
+        </small>
+
+      </span>
+
+    </motion.button>
+
+  );
 
 }
 

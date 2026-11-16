@@ -245,3 +245,42 @@
   }
 
 }
+/* Miniatura de la categoría */
+
+.categoria-nombre {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+}
+
+.categoria-thumb {
+
+  flex-shrink: 0;
+
+  width: 46px;
+
+  height: 46px;
+
+  border-radius: 10px;
+
+  object-fit: cover;
+
+}
+
+.categoria-thumb-vacia {
+
+  display: grid;
+
+  place-items: center;
+
+  background: #eef2f7;
+
+  color: #9aa8bc;
+
+  font-size: 18px;
+
+}

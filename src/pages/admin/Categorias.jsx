@@ -19,6 +19,10 @@ import {
   cambiarEstadoCategoria
 } from "../../services/categoriaService";
 
+import {
+  eliminarImagenPorUrl
+} from "../../services/storageService";
+
 import "../../styles/admin/categorias/Categorias.css";
 
 function Categorias() {
@@ -132,6 +136,16 @@ function Categorias() {
           datos
         );
 
+        // Si cambió o quitó la imagen, se borra la anterior de Storage.
+        if (
+          categoriaEditar.imagen &&
+          categoriaEditar.imagen !== datos.imagen
+        ) {
+          await eliminarImagenPorUrl(
+            categoriaEditar.imagen
+          );
+        }
+
       } else {
 
         await crearCategoria(datos);
@@ -179,6 +193,10 @@ function Categorias() {
 
       await eliminarCategoria(
         categoria.id
+      );
+
+      await eliminarImagenPorUrl(
+        categoria.imagen
       );
 
       await cargarCategorias();

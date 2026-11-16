@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import {
   FaBoxOpen,
   FaPlus,
@@ -15,12 +17,19 @@ import {
   obtenerProductos,
   eliminarProducto,
   cambiarEstadoProducto,
-  cambiarPromocionProducto
+  cambiarPromocionProducto,
+  normalizarImagenes
 } from "../../services/productoService";
+
+import {
+  eliminarImagenesPorUrl
+} from "../../services/storageService";
 
 import "../../styles/admin/productos/Productos.css";
 
 function Productos() {
+
+  const navigate = useNavigate();
 
   const [productos, setProductos] = useState([]);
 
@@ -93,6 +102,10 @@ function Productos() {
 
       await eliminarProducto(
         producto.id
+      );
+
+      await eliminarImagenesPorUrl(
+        normalizarImagenes(producto)
       );
 
       setProductos((actuales) =>
@@ -264,9 +277,8 @@ function Productos() {
           <button
             className="btn-nuevo-producto"
             onClick={() =>
-              window.location.href =
-                "/admin/nuevo-producto"
-            }
+                navigate("/admin/nuevo-producto")
+              }
           >
 
             <FaPlus />
@@ -347,8 +359,7 @@ function Productos() {
             <button
               className="btn-nuevo-producto"
               onClick={() =>
-                window.location.href =
-                  "/admin/nuevo-producto"
+                navigate("/admin/nuevo-producto")
               }
             >
 
@@ -539,8 +550,9 @@ function Productos() {
                             className="btn-editar"
                             title="Editar"
                             onClick={() =>
-                              window.location.href =
+                              navigate(
                                 `/admin/editar/${producto.id}`
+                              )
                             }
                           >
 

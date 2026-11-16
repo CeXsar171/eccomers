@@ -5,15 +5,19 @@ import {
   FaSave,
   FaTimes,
   FaStar,
-  FaImage,
+  FaImages,
   FaUpload
 } from "react-icons/fa";
 
 import "../../../styles/admin/productos/ProductoForm.css";
+import "../../../styles/admin/ImagePicker.css";
 
 import {
-  subirImagenProducto
+  subirImagenProducto,
+  validarImagen
 } from "../../../services/storageService";
+
+const MAXIMO_IMAGENES = 6;
 
 
 function ProductoForm({
@@ -30,9 +34,9 @@ function ProductoForm({
   const [categoriaId, setCategoriaId] = useState("");
   const [categoriaNombre, setCategoriaNombre] = useState("");
 
-  const [imagen, setImagen] = useState("");
-  const [archivoImagen, setArchivoImagen] = useState(null);
-  const [vistaPrevia, setVistaPrevia] = useState("");
+  // Imágenes ya guardadas (URLs) e imágenes nuevas por subir ({ archivo, vista })
+  const [imagenesGuardadas, setImagenesGuardadas] = useState([]);
+  const [imagenesNuevas, setImagenesNuevas] = useState([]);
 
   const [promocion, setPromocion] = useState(false);
 
@@ -49,38 +53,23 @@ function ProductoForm({
     if (productoEditar) {
 
       setNombre(productoEditar.nombre || "");
+      setDescripcion(productoEditar.descripcion || "");
+      setPrecio(productoEditar.precio ?? "");
+      setStock(productoEditar.stock ?? "");
+      setCategoriaId(productoEditar.categoriaId || "");
+      setCategoriaNombre(productoEditar.categoriaNombre || "");
+      setPromocion(productoEditar.promocion || false);
 
-      setDescripcion(
-        productoEditar.descripcion || ""
-      );
+      const existentes =
+        Array.isArray(productoEditar.imagenes) &&
+        productoEditar.imagenes.length > 0
+          ? productoEditar.imagenes
+          : productoEditar.imagen
+            ? [productoEditar.imagen]
+            : [];
 
-      setPrecio(
-        productoEditar.precio ?? ""
-      );
-
-      setStock(
-        productoEditar.stock ?? ""
-      );
-
-      setCategoriaId(
-        productoEditar.categoriaId || ""
-      );
-
-      setCategoriaNombre(
-        productoEditar.categoriaNombre || ""
-      );
-
-      setImagen(
-        productoEditar.imagen || ""
-      );
-
-      setVistaPrevia(
-        productoEditar.imagen || ""
-      );
-
-      setPromocion(
-        productoEditar.promocion || false
-      );
+      setImagenesGuardadas(existentes);
+      setImagenesNuevas([]);
 
     } else {
 
@@ -90,16 +79,35 @@ function ProductoForm({
       setStock("");
       setCategoriaId("");
       setCategoriaNombre("");
-      setImagen("");
-      setArchivoImagen(null);
-      setVistaPrevia("");
       setPromocion(false);
+      setImagenesGuardadas([]);
+      setImagenesNuevas([]);
 
     }
 
     setError("");
 
   }, [productoEditar]);
+
+
+  // Libera las vistas previas temporales al salir
+  useEffect(() => {
+
+    return () => {
+
+      imagenesNuevas.forEach((imagen) =>
+        URL.revokeObjectURL(imagen.vista)
+      );
+
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+  const totalImagenes =
+    imagenesGuardadas.length +
+    imagenesNuevas.length;
 
 
   // =====================================
@@ -126,61 +134,86 @@ function ProductoForm({
 
 
   // =====================================
-  // SELECCIONAR IMAGEN
+  // SELECCIONAR IMÁGENES (varias)
   // =====================================
 
-  const manejarImagen = (e) => {
+  const manejarImagenes = (e) => {
 
-    const archivo =
-      e.target.files?.[0];
+    const archivos =
+      Array.from(e.target.files || []);
 
-    if (!archivo) {
+    e.target.value = "";
+
+    if (archivos.length === 0) {
       return;
     }
 
+    const disponibles =
+      MAXIMO_IMAGENES - totalImagenes;
 
-    // Validar que sea imagen
-
-    if (!archivo.type.startsWith("image/")) {
+    if (disponibles <= 0) {
 
       setError(
-        "El archivo seleccionado no es una imagen."
+        `Solo puedes tener hasta ${MAXIMO_IMAGENES} imágenes por producto.`
       );
-
-      e.target.value = "";
 
       return;
     }
 
+    const aceptadas = [];
 
-    // Máximo 5 MB
+    for (const archivo of archivos.slice(0, disponibles)) {
 
-    const maximo =
-      5 * 1024 * 1024;
+      const mensaje = validarImagen(archivo);
 
-    if (archivo.size > maximo) {
+      if (mensaje) {
+        setError(`${archivo.name}: ${mensaje}`);
+        return;
+      }
+
+      aceptadas.push({
+        archivo,
+        vista: URL.createObjectURL(archivo)
+      });
+
+    }
+
+    if (archivos.length > disponibles) {
 
       setError(
-        "La imagen no puede superar los 5 MB."
+        `Solo se añadieron ${disponibles} imagen(es): el máximo es ${MAXIMO_IMAGENES}.`
       );
 
-      e.target.value = "";
+    } else {
 
-      return;
+      setError("");
+
     }
 
+    setImagenesNuevas((actuales) => [
+      ...actuales,
+      ...aceptadas
+    ]);
 
-    setError("");
-
-    setArchivoImagen(archivo);
+  };
 
 
-    // Crear vista previa
+  const quitarGuardada = (url) => {
 
-    const url =
-      URL.createObjectURL(archivo);
+    setImagenesGuardadas((actuales) =>
+      actuales.filter((item) => item !== url)
+    );
 
-    setVistaPrevia(url);
+  };
+
+
+  const quitarNueva = (vista) => {
+
+    URL.revokeObjectURL(vista);
+
+    setImagenesNuevas((actuales) =>
+      actuales.filter((item) => item.vista !== vista)
+    );
 
   };
 
@@ -195,156 +228,92 @@ function ProductoForm({
 
     setError("");
 
-
-    const nombreLimpio =
-      nombre.trim();
-
-    const descripcionLimpia =
-      descripcion.trim();
-
-    const precioNumero =
-      Number(precio);
-
-    const stockNumero =
-      Number(stock);
-
-
-    // VALIDAR NOMBRE
+    const nombreLimpio = nombre.trim();
+    const descripcionLimpia = descripcion.trim();
+    const precioNumero = Number(precio);
+    const stockNumero = Number(stock);
 
     if (!nombreLimpio) {
-
-      setError(
-        "El nombre del producto es obligatorio."
-      );
-
+      setError("El nombre del producto es obligatorio.");
       return;
     }
-
 
     if (nombreLimpio.length < 2) {
-
-      setError(
-        "El nombre debe tener al menos 2 caracteres."
-      );
-
+      setError("El nombre debe tener al menos 2 caracteres.");
       return;
     }
 
-
-    // VALIDAR PRECIO
-
     if (
-      !precio ||
+      precio === "" ||
       Number.isNaN(precioNumero) ||
       precioNumero < 0
     ) {
-
-      setError(
-        "Ingresa un precio válido."
-      );
-
+      setError("Ingresa un precio válido.");
       return;
     }
-
-
-    // VALIDAR STOCK
 
     if (
       stock === "" ||
       Number.isNaN(stockNumero) ||
       stockNumero < 0
     ) {
-
-      setError(
-        "Ingresa un stock válido."
-      );
-
+      setError("Ingresa un stock válido.");
       return;
     }
-
-
-    // VALIDAR CATEGORÍA
 
     if (!categoriaId) {
-
-      setError(
-        "Selecciona una categoría."
-      );
-
+      setError("Selecciona una categoría.");
       return;
     }
-
 
     try {
 
       setGuardando(true);
 
+      // Subir imágenes nuevas, una por una
+      const urlsNuevas = [];
 
-      // =================================
-      // SUBIR IMAGEN
-      // =================================
+      for (const imagen of imagenesNuevas) {
 
-      let imagenFinal = imagen;
-
-
-      if (archivoImagen) {
-
-        console.log(
-          "📷 Subiendo imagen..."
-        );
-
-        imagenFinal =
+        const url =
           await subirImagenProducto(
-            archivoImagen
+            imagen.archivo
           );
 
-        console.log(
-          "✅ Imagen subida:",
-          imagenFinal
-        );
+        urlsNuevas.push(url);
 
       }
 
-
-      // =================================
-      // GUARDAR PRODUCTO
-      // =================================
+      const imagenes = [
+        ...imagenesGuardadas,
+        ...urlsNuevas
+      ];
 
       await onGuardar({
 
-        nombre:
-          nombreLimpio,
+        nombre: nombreLimpio,
 
-        descripcion:
-          descripcionLimpia,
+        descripcion: descripcionLimpia,
 
-        precio:
-          precioNumero,
+        precio: precioNumero,
 
-        stock:
-          stockNumero,
+        stock: stockNumero,
 
-        categoriaId:
-          categoriaId,
+        categoriaId,
 
-        categoriaNombre:
-          categoriaNombre,
+        categoriaNombre,
 
-        imagen:
-          imagenFinal,
+        imagenes,
 
-        promocion:
-          promocion
+        imagen: imagenes[0] || "",
+
+        promocion
 
       });
 
-
     } catch (error) {
 
-      console.error(
-        "Error:",
-        error
-      );
+      console.error("Error:", error);
 
       setError(
         error.message ||
@@ -367,35 +336,24 @@ function ProductoForm({
       onSubmit={manejarSubmit}
     >
 
-
-      {/* =================================
-          CABECERA
-      ================================= */}
-
       <div className="producto-form-header">
 
         <div className="producto-form-icon">
-
           <FaBoxOpen />
-
         </div>
 
         <div>
 
           <h2>
-
             {productoEditar
               ? "Editar producto"
               : "Nuevo producto"}
-
           </h2>
 
           <p>
-
             {productoEditar
               ? "Modifica la información del producto."
               : "Registra un nuevo producto para tu ferretería."}
-
           </p>
 
         </div>
@@ -403,40 +361,24 @@ function ProductoForm({
       </div>
 
 
-      {/* =================================
-          ERROR
-      ================================= */}
-
       {error && (
-
         <div className="producto-form-error">
-
           {error}
-
         </div>
-
       )}
 
-
-      {/* =================================
-          NOMBRE
-      ================================= */}
 
       <div className="form-group">
 
         <label htmlFor="producto-nombre">
-
           Nombre del producto *
-
         </label>
 
         <input
           id="producto-nombre"
           type="text"
           value={nombre}
-          onChange={(e) =>
-            setNombre(e.target.value)
-          }
+          onChange={(e) => setNombre(e.target.value)}
           placeholder="Ej: Taladro eléctrico"
           maxLength={100}
           disabled={guardando}
@@ -445,26 +387,16 @@ function ProductoForm({
       </div>
 
 
-      {/* =================================
-          DESCRIPCIÓN
-      ================================= */}
-
       <div className="form-group">
 
         <label htmlFor="producto-descripcion">
-
           Descripción
-
         </label>
 
         <textarea
           id="producto-descripcion"
           value={descripcion}
-          onChange={(e) =>
-            setDescripcion(
-              e.target.value
-            )
-          }
+          onChange={(e) => setDescripcion(e.target.value)}
           placeholder="Describe las características del producto..."
           rows="4"
           maxLength={500}
@@ -474,18 +406,12 @@ function ProductoForm({
       </div>
 
 
-      {/* =================================
-          PRECIO + STOCK
-      ================================= */}
-
       <div className="form-row">
 
         <div className="form-group">
 
           <label htmlFor="producto-precio">
-
             Precio *
-
           </label>
 
           <div className="input-money">
@@ -498,11 +424,7 @@ function ProductoForm({
               min="0"
               step="0.01"
               value={precio}
-              onChange={(e) =>
-                setPrecio(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setPrecio(e.target.value)}
               placeholder="0.00"
               disabled={guardando}
             />
@@ -511,13 +433,10 @@ function ProductoForm({
 
         </div>
 
-
         <div className="form-group">
 
           <label htmlFor="producto-stock">
-
             Stock *
-
           </label>
 
           <input
@@ -526,11 +445,7 @@ function ProductoForm({
             min="0"
             step="1"
             value={stock}
-            onChange={(e) =>
-              setStock(
-                e.target.value
-              )
-            }
+            onChange={(e) => setStock(e.target.value)}
             placeholder="0"
             disabled={guardando}
           />
@@ -540,16 +455,10 @@ function ProductoForm({
       </div>
 
 
-      {/* =================================
-          CATEGORÍA
-      ================================= */}
-
       <div className="form-group">
 
         <label htmlFor="producto-categoria">
-
           Categoría *
-
         </label>
 
         <select
@@ -560,105 +469,140 @@ function ProductoForm({
         >
 
           <option value="">
-
             Selecciona una categoría
-
           </option>
 
-          {categorias.map(
-            (categoria) => (
+          {categorias
+            .filter(
+              (categoria) =>
+                categoria.estado !== false ||
+                categoria.id === categoriaId
+            )
+            .map((categoria) => (
 
               <option
                 key={categoria.id}
                 value={categoria.id}
               >
-
                 {categoria.nombre}
-
               </option>
 
-            )
-          )}
+            ))}
 
         </select>
 
-
         {categorias.length === 0 && (
-
           <small className="form-help">
-
             No hay categorías disponibles.
             Crea una categoría primero.
-
           </small>
-
         )}
 
       </div>
 
 
-      {/* =================================
-          IMAGEN
-      ================================= */}
+      {/* IMÁGENES */}
 
       <div className="form-group">
 
-        <label htmlFor="producto-imagen">
+        <label htmlFor="producto-imagenes">
 
-          <FaImage />
+          <FaImages />
 
-          Imagen del producto
+          Fotografías del producto
+          ({totalImagenes}/{MAXIMO_IMAGENES})
 
         </label>
-
 
         <div className="imagen-upload">
 
           <input
-            id="producto-imagen"
+            id="producto-imagenes"
             type="file"
+            multiple
             accept="image/png,image/jpeg,image/webp"
-            onChange={manejarImagen}
-            disabled={guardando}
+            onChange={manejarImagenes}
+            disabled={guardando || totalImagenes >= MAXIMO_IMAGENES}
           />
 
-
           <label
-            htmlFor="producto-imagen"
+            htmlFor="producto-imagenes"
             className="btn-seleccionar-imagen"
           >
 
             <FaUpload />
 
-            Seleccionar imagen
+            Seleccionar imágenes
 
           </label>
 
         </div>
 
-
         <small className="form-help">
-
-          JPG, PNG o WEBP.
-          Tamaño máximo 5 MB.
-
+          JPG, PNG o WEBP. Máximo 5 MB cada una.
+          La primera será la imagen principal.
         </small>
 
+        {totalImagenes > 0 && (
 
-        {/* VISTA PREVIA */}
+          <div className="imagenes-grid">
 
-        {vistaPrevia && (
+            {imagenesGuardadas.map((url, indice) => (
 
-          <div className="producto-preview">
+              <div className="imagen-item" key={url}>
 
-            <p>
-              Vista previa
-            </p>
+                <img src={url} alt={`Imagen ${indice + 1}`} />
 
-            <img
-              src={vistaPrevia}
-              alt="Vista previa del producto"
-            />
+                {indice === 0 && (
+                  <span className="imagen-principal">
+                    Principal
+                  </span>
+                )}
+
+                <button
+                  type="button"
+                  className="imagen-quitar"
+                  title="Quitar imagen"
+                  onClick={() => quitarGuardada(url)}
+                  disabled={guardando}
+                >
+                  <FaTimes />
+                </button>
+
+              </div>
+
+            ))}
+
+            {imagenesNuevas.map((imagen, indice) => (
+
+              <div className="imagen-item" key={imagen.vista}>
+
+                <img
+                  src={imagen.vista}
+                  alt={`Nueva imagen ${indice + 1}`}
+                />
+
+                {imagenesGuardadas.length === 0 && indice === 0 && (
+                  <span className="imagen-principal">
+                    Principal
+                  </span>
+                )}
+
+                <span className="imagen-nueva">Nueva</span>
+
+                <button
+                  type="button"
+                  className="imagen-quitar"
+                  title="Quitar imagen"
+                  onClick={() => quitarNueva(imagen.vista)}
+                  disabled={guardando}
+                >
+                  <FaTimes />
+                </button>
+
+              </div>
+
+            ))}
 
           </div>
 
@@ -667,64 +611,41 @@ function ProductoForm({
       </div>
 
 
-      {/* =================================
-          PROMOCIÓN
-      ================================= */}
-
       <div
         className={
           promocion
             ? "promocion-option activa"
             : "promocion-option"
         }
-
-        onClick={() =>
-          setPromocion(!promocion)
-        }
+        onClick={() => setPromocion(!promocion)}
       >
 
         <div className="promocion-icon">
-
           <FaStar />
-
         </div>
 
-        <div>
+        <div className="promocion-texto">
 
           <strong>
             Producto en promoción
           </strong>
 
           <p>
-
-            Mostrar este producto como
-            destacado.
-
+            Mostrar este producto como destacado.
           </p>
 
         </div>
 
-
         <input
           type="checkbox"
           checked={promocion}
-          onChange={(e) =>
-            setPromocion(
-              e.target.checked
-            )
-          }
-          onClick={(e) =>
-            e.stopPropagation()
-          }
+          onChange={(e) => setPromocion(e.target.checked)}
+          onClick={(e) => e.stopPropagation()}
           disabled={guardando}
         />
 
       </div>
 
-
-      {/* =================================
-          BOTONES
-      ================================= */}
 
       <div className="producto-form-actions">
 
@@ -740,7 +661,6 @@ function ProductoForm({
           Cancelar
 
         </button>
-
 
         <button
           type="submit"

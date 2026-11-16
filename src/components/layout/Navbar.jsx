@@ -13,19 +13,29 @@ function Navbar() {
 
       <div className="navbar-container">
 
-        <Link to="/" className="logo">
-      
+        <Link to="/" className="logo" onClick={cerrarMenu}>
+
           <FaTools className="logo-icon" />
 
           <div>
-            <h2>SU CENTRO 
+            <h2>SU CENTRO
               <br />
               FERRETERO
-              </h2>
+            </h2>
             <span>Todo para tu construcción</span>
           </div>
 
         </Link>
+
+        <button
+          type="button"
+          className="nav-toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
 
         <nav className={menuOpen ? "nav-menu active" : "nav-menu"}>
 
@@ -36,12 +46,6 @@ function Navbar() {
           <Link onClick={cerrarMenu} to="/formas-pago">Pagos</Link>
 
           <Link onClick={cerrarMenu} to="/ubicacion">Ubicación</Link>
-
-          <Link onClick={cerrarMenu} to="/login" className="admin-btn">
-
-            Administrador
-
-          </Link>
 
         </nav>
 

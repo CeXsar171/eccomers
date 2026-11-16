@@ -1,17 +1,26 @@
 import { motion } from "framer-motion";
 
 import {
-  FaShoppingCart,
-  FaImage
+  FaImage,
+  FaImages,
+  FaWhatsapp,
+  FaEye
 } from "react-icons/fa";
+
+import { normalizarImagenes } from "../../services/productoService";
+import { formatearPrecio } from "../../utils/catalogo";
+import { enlaceWhatsApp } from "../../utils/whatsapp";
 
 import "../../styles/products/ProductCard.css";
 
 
-function ProductCard({ product }) {
+function ProductCard({ product, onSelect }) {
+
+  const imagenes =
+    normalizarImagenes(product);
 
   const imagen =
-    product.imagen || "";
+    imagenes[0] || "";
 
   const nombre =
     product.nombre || "Producto sin nombre";
@@ -22,29 +31,39 @@ function ProductCard({ product }) {
   const descripcion =
     product.descripcion || "Sin descripción disponible.";
 
-  const precio =
-    Number(product.precio || 0);
+  const abrir = () => onSelect?.(product);
+
+  const teclado = (e) => {
+
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      abrir();
+    }
+
+  };
 
 
   return (
 
-    <motion.div
+    <motion.article
 
       className="product-card"
 
-      whileHover={{
-        y: -10
-      }}
+      whileHover={{ y: -6 }}
 
-      transition={{
-        duration: 0.3
-      }}
+      transition={{ duration: 0.25 }}
+
+      onClick={abrir}
+
+      onKeyDown={teclado}
+
+      role="button"
+
+      tabIndex={0}
+
+      aria-label={`Ver detalles de ${nombre}`}
 
     >
-
-      {/* =========================
-          PROMOCIÓN
-      ========================= */}
 
       {product.promocion && (
 
@@ -57,10 +76,6 @@ function ProductCard({ product }) {
       )}
 
 
-      {/* =========================
-          IMAGEN
-      ========================= */}
-
       <div className="product-image">
 
         {imagen ? (
@@ -68,6 +83,7 @@ function ProductCard({ product }) {
           <img
             src={imagen}
             alt={nombre}
+            loading="lazy"
           />
 
         ) : (
@@ -84,15 +100,22 @@ function ProductCard({ product }) {
 
         )}
 
+        {imagenes.length > 1 && (
+
+          <span className="product-fotos">
+
+            <FaImages />
+
+            {imagenes.length}
+
+          </span>
+
+        )}
+
       </div>
 
 
-      {/* =========================
-          INFORMACIÓN
-      ========================= */}
-
       <div className="product-body">
-
 
         <span className="product-category">
 
@@ -100,13 +123,11 @@ function ProductCard({ product }) {
 
         </span>
 
-
         <h3>
 
           {nombre}
 
         </h3>
-
 
         <p>
 
@@ -114,37 +135,52 @@ function ProductCard({ product }) {
 
         </p>
 
-
-        {/* =========================
-            PRECIO
-        ========================= */}
-
         <div className="price-row">
 
           <span className="price">
 
-            ${precio.toFixed(2)}
+            {formatearPrecio(product.precio)}
 
           </span>
 
+          <div className="product-actions">
 
-          <button
-            type="button"
-            className="buy-button"
-          >
+            <button
+              type="button"
+              className="btn-detalles"
+              onClick={(e) => {
+                e.stopPropagation();
+                abrir();
+              }}
+            >
 
-            <FaShoppingCart />
+              <FaEye />
 
-            Comprar
+              Ver detalles
 
-          </button>
+            </button>
+
+            <a
+              className="btn-whatsapp-mini"
+              href={enlaceWhatsApp(product)}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              title="Consultar por WhatsApp"
+              aria-label={`Consultar ${nombre} por WhatsApp`}
+            >
+
+              <FaWhatsapp />
+
+            </a>
+
+          </div>
 
         </div>
 
-
       </div>
 
-    </motion.div>
+    </motion.article>
 
   );
 

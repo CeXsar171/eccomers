@@ -1,50 +1,28 @@
-import { useEffect, useState } from "react";
-
 import ProductCard from "./ProductCard";
-
-import { obtenerProductos } from "../../services/productoService";
 
 import "../../styles/products/Promotions.css";
 
-function PromotionsSection() {
+function PromotionsSection({
+  productos,
+  cargando,
+  onSelectProducto
+}) {
 
-    const [promociones, setPromociones] = useState([]);
+    const promociones =
+        productos.filter(
+            producto => producto.promocion === true
+        );
 
-    useEffect(() => {
-
-        cargarPromociones();
-
-    }, []);
-
-    const cargarPromociones = async () => {
-
-        try {
-
-            const productos = await obtenerProductos();
-
-            const productosPromocion =
-                productos.filter(
-                    producto =>
-                        producto.promocion === true &&
-                        producto.estado !== false
-                );
-
-            setPromociones(productosPromocion);
-
-        } catch (error) {
-
-            console.error(
-                "Error al cargar promociones:",
-                error
-            );
-
-        }
-
-    };
+    if (cargando) {
+        return null;
+    }
 
     return (
 
-        <section className="promotions-section">
+        <section
+            className="promotions-section"
+            id="promociones"
+        >
 
             <div className="container">
 
@@ -71,6 +49,7 @@ function PromotionsSection() {
                             <ProductCard
                                 key={producto.id}
                                 product={producto}
+                                onSelect={onSelectProducto}
                             />
 
                         ))}

@@ -1,97 +1,232 @@
+/* Carrusel compacto de categorías */
+
 .categories{
-
-    padding:80px 0;
-
-    background:#f7f7f7;
-
+    padding:44px 0 30px;
+    background:#fff;
 }
 
-.container{
-
-    width:90%;
-
-    max-width:1200px;
-
-    margin:auto;
-
+.categories .section-subtitle{
+    margin-bottom:26px;
+    font-size:16px;
 }
 
-.section-title{
+.categories-carousel{
+    padding:14px 8px 42px;
 
-    text-align:center;
-
-    color:#0B3D91;
-
-    margin-bottom:50px;
-
-    font-size:38px;
-
+    --swiper-theme-color:var(--naranja);
+    --swiper-pagination-bullet-inactive-color:#9db9e3;
+    --swiper-pagination-bullet-inactive-opacity:.6;
+    --swiper-navigation-size:16px;
+    --swiper-navigation-sides-offset:8px;
 }
 
-.categories-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-    gap:30px;
-
+.categories-carousel .swiper-slide{
+    height:auto;
 }
 
 .category-card{
+    position:relative;
 
-    background:white;
+    display:block;
 
-    border-radius:12px;
+    width:100%;
+    height:170px;
+
+    padding:0;
+
+    border:none;
+    border-radius:18px;
 
     overflow:hidden;
 
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    background:linear-gradient(135deg,var(--azul),var(--azul-claro));
 
-    transition:.35s;
+    box-shadow:var(--sombra);
 
     cursor:pointer;
 
+    text-align:left;
+    font-family:inherit;
+
+    transition:box-shadow .3s;
 }
 
 .category-card:hover{
-
-    transform:translateY(-10px);
-
-    box-shadow:0 15px 30px rgba(0,0,0,.15);
-
+    box-shadow:var(--sombra-fuerte);
 }
 
 .category-card img{
+    position:absolute;
+    inset:0;
 
     width:100%;
-
-    height:220px;
+    height:100%;
 
     object-fit:cover;
 
-    transition:.4s;
-
+    transition:transform .5s;
 }
 
 .category-card:hover img{
-
     transform:scale(1.08);
+}
 
+.category-sin-imagen{
+    position:absolute;
+    inset:0;
+
+    display:grid;
+    place-items:center;
+
+    color:rgba(255,255,255,.25);
+
+    font-size:64px;
+}
+
+/* Degradado para que el nombre se lea sobre cualquier foto */
+.category-card::after{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:linear-gradient(180deg,rgba(5,25,55,0) 35%,rgba(5,25,55,.88));
+
+    pointer-events:none;
 }
 
 .category-info{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
 
-    padding:20px;
+    z-index:2;
 
-    text-align:center;
+    display:block;
 
+    padding:16px 18px;
+
+    color:#fff;
 }
 
 .category-info h3{
+    margin:0;
 
-    color:#333;
+    font-size:20px;
+    font-weight:700;
+    line-height:1.2;
+}
 
-    font-size:22px;
+.category-info small{
+    display:block;
+
+    margin-top:4px;
+
+    color:rgba(255,255,255,.8);
+
+    font-size:13px;
+}
+
+.category-card.activa{
+    box-shadow:0 0 0 4px var(--naranja), var(--sombra-fuerte);
+}
+
+.category-card.activa .category-info small{
+    color:#ffcf99;
+    font-weight:700;
+}
+
+/* Flechas redondas */
+
+.categories-carousel .swiper-button-prev,
+.categories-carousel .swiper-button-next{
+    top:calc(50% - 21px);
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    background:#fff;
+    color:var(--azul);
+
+    box-shadow:0 6px 16px rgba(11,61,145,.25);
+
+    transition:background .2s, color .2s;
+}
+
+.categories-carousel .swiper-button-prev:hover,
+.categories-carousel .swiper-button-next:hover{
+    background:var(--naranja);
+    color:#fff;
+}
+
+.categories-carousel .swiper-button-prev::after,
+.categories-carousel .swiper-button-next::after{
+    font-size:15px;
+    font-weight:900;
+}
+
+.categories-carousel .swiper-navigation-icon{
+    width:auto;
+    height:16px;
+}
+
+.categories-carousel .swiper-button-disabled{
+    opacity:0;
+    pointer-events:none;
+}
+
+/* Carga */
+
+.categories-skeleton{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+
+    padding-bottom:42px;
+}
+
+.categories-skeleton span{
+    height:170px;
+
+    border-radius:18px;
+
+    background:linear-gradient(90deg,#eef2f8 25%,#f7f9fc 50%,#eef2f8 75%);
+    background-size:200% 100%;
+
+    animation:brillo 1.4s infinite;
+}
+
+@keyframes brillo{
+    to{
+        background-position:-200% 0;
+    }
+}
+
+@media (max-width:768px){
+
+    .categories{
+        padding:34px 0 20px;
+    }
+
+    .category-card{
+        height:150px;
+    }
+
+    /* En celular se desliza con el dedo */
+    .categories-carousel .swiper-button-prev,
+    .categories-carousel .swiper-button-next{
+        display:none;
+    }
+
+    .categories-skeleton{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .categories-skeleton span:nth-child(n+3){
+        display:none;
+    }
 
 }

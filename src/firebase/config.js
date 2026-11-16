@@ -18,4 +18,9 @@ export const db = getFirestore(app);
 
 export const storage = getStorage(app);
 
+// Si Storage no responde (bucket no activado, reglas, red), falla en
+// 20 segundos con un error claro en lugar de quedarse "Guardando..." 10 minutos.
+storage.maxUploadRetryTime = 20000;
+storage.maxOperationRetryTime = 20000;
+
 export default app;

@@ -50,7 +50,7 @@ function Footer() {
 
             <li><Link to="/quienes-somos">Quiénes Somos</Link></li>
 
-            <li><Link to="/horarios">Horarios</Link></li>
+            <li><Link to="/ubicacion">Horarios</Link></li>
 
             <li><Link to="/formas-pago">Pagos</Link></li>
 

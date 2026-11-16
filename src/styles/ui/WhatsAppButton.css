@@ -6,9 +6,11 @@
 
     right:25px;
 
-    width:65px;
+    z-index:900;
 
-    height:65px;
+    width:62px;
+
+    height:62px;
 
     background:#25D366;
 
@@ -22,10 +24,51 @@
 
     color:white;
 
-    font-size:35px;
+    font-size:34px;
 
     text-decoration:none;
 
-    box-shadow:0 5px 15px rgba(0,0,0,.3);
+    box-shadow:0 8px 20px rgba(0,0,0,.28);
+
+    transition:transform .2s;
+
+}
+
+.whatsapp:hover{
+
+    transform:scale(1.1);
+
+}
+
+/* Aro que pulsa para llamar la atención */
+.whatsapp::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:50%;
+
+    background:#25D366;
+
+    z-index:-1;
+
+    animation:whatsapp-pulso 2.2s infinite;
+
+}
+
+@keyframes whatsapp-pulso{
+
+    0%{
+        transform:scale(1);
+        opacity:.55;
+    }
+
+    100%{
+        transform:scale(1.6);
+        opacity:0;
+    }
 
 }
