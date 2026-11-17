@@ -1,0 +1,214 @@
+/* =========================================
+   PANEL ADMIN · Sistema de botones y UI común
+   Azul = identidad · Naranja = acción principal
+========================================= */
+
+/* ---------- Botones primarios (naranja) ---------- */
+
+.admin-layout .btn-nuevo-producto,
+.admin-layout .btn-nueva-categoria,
+.admin-layout .btn-guardar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  border: none;
+  border-radius: 12px;
+  padding: 12px 22px;
+
+  background: linear-gradient(135deg, #ff9a2e, #f57c00);
+  color: #fff;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 18px rgba(245, 124, 0, 0.28);
+
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-layout .btn-nuevo-producto:hover,
+.admin-layout .btn-nueva-categoria:hover,
+.admin-layout .btn-guardar:hover {
+  background: linear-gradient(135deg, #ff8f1f, #e56f00);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(245, 124, 0, 0.38);
+}
+
+.admin-layout .btn-nuevo-producto:active,
+.admin-layout .btn-nueva-categoria:active,
+.admin-layout .btn-guardar:active {
+  transform: translateY(0);
+}
+
+.admin-layout .btn-guardar:disabled,
+.admin-layout .btn-cancelar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---------- Botones secundarios (borde) ---------- */
+
+.admin-layout .btn-cancelar,
+.admin-layout .btn-volver-productos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  border: 1.5px solid #d5dbe3;
+  border-radius: 12px;
+  padding: 11px 20px;
+
+  background: #fff;
+  color: #3b4756;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.admin-layout .btn-cancelar:hover,
+.admin-layout .btn-volver-productos:hover {
+  border-color: #1565c0;
+  background: #f3f8ff;
+  color: #1565c0;
+}
+
+/* ---------- Botones de icono (editar / eliminar) ---------- */
+
+.admin-layout .btn-editar,
+.admin-layout .btn-eliminar {
+  width: 38px;
+  height: 38px;
+
+  border: none;
+  border-radius: 10px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.admin-layout .btn-editar {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.admin-layout .btn-editar:hover {
+  background: #1565c0;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.admin-layout .btn-eliminar {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.admin-layout .btn-eliminar:hover {
+  background: #c62828;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ---------- Píldoras de estado / promoción ---------- */
+
+.admin-layout .estado,
+.admin-layout .promocion {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  border: none;
+  border-radius: 999px;
+  padding: 7px 14px;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: filter 0.2s, transform 0.2s;
+}
+
+.admin-layout .estado:hover,
+.admin-layout .promocion:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.admin-layout .estado.activo {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.admin-layout .estado.inactivo {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.admin-layout .promocion {
+  background: #eef1f5;
+  color: #7b8794;
+}
+
+.admin-layout .promocion.activa {
+  background: #fff1dc;
+  color: #e56f00;
+}
+
+/* ---------- Foco accesible ---------- */
+
+.admin-layout button:focus-visible,
+.admin-layout a:focus-visible {
+  outline: 3px solid rgba(21, 101, 192, 0.35);
+  outline-offset: 2px;
+}
+
+/* ---------- Cargando ---------- */
+
+.admin-layout .loading-spinner {
+  width: 40px;
+  height: 40px;
+
+  border: 4px solid #e3f2fd;
+  border-top-color: #1565c0;
+  border-radius: 50%;
+
+  animation: admin-girar 0.8s linear infinite;
+}
+
+@keyframes admin-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 600px) {
+
+  .admin-layout .btn-nuevo-producto,
+  .admin-layout .btn-nueva-categoria {
+    width: 100%;
+  }
+
+}

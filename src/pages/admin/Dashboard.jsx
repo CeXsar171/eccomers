@@ -24,8 +24,12 @@ function Dashboard() {
   }, []);
 
   const cargarDashboard = async () => {
-    const data = await getDashboardData();
-    setDatos(data);
+    try {
+      const data = await getDashboardData();
+      setDatos(data);
+    } catch (error) {
+      console.error("Error al cargar el dashboard:", error);
+    }
   };
 
   return (
@@ -36,8 +40,7 @@ function Dashboard() {
       <RecentProducts
         productos={datos.ultimosProductos}
       />
-      <categorias/>
-      
+
       <DashboardChart />
 
       <QuickActions />

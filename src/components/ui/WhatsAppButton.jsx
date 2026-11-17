@@ -1,5 +1,5 @@
 import { FaWhatsapp } from "react-icons/fa";
-import company from "../../data/company";
+import { enlaceWhatsApp } from "../../utils/whatsapp";
 import "../../styles/ui/WhatsAppButton.css";
 
 function WhatsAppButton(){
@@ -8,13 +8,17 @@ function WhatsAppButton(){
 
         <a
 
-            href={`https://wa.me/${company.whatsapp}`}
+            href={enlaceWhatsApp()}
 
             target="_blank"
 
             rel="noreferrer"
 
             className="whatsapp"
+
+            aria-label="Escríbenos por WhatsApp"
+
+            title="Escríbenos por WhatsApp"
 
         >
 

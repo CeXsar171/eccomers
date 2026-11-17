@@ -7,8 +7,7 @@ import {
   FaBoxOpen,
   FaTags,
   FaStar,
-  FaPlus,
-  FaCog
+  FaPlus
 } from "react-icons/fa";
 
 import "../../styles/admin/Sidebar.css";
@@ -23,14 +22,15 @@ function Sidebar() {
 
       <div className="sidebar-header">
 
-    <div className="logo">
+    <div className="sidebar-logo">
 
         {!collapsed && <h2>Ferretería</h2>}
 
     </div>
 
     <button
-        className="menu-btn"
+        type="button"
+        className="sidebar-toggle"
         onClick={() => setCollapsed(!collapsed)}
     >
         <FaBars />
@@ -40,7 +40,7 @@ function Sidebar() {
 
       <nav>
 
-        <NavLink to="/admin">
+        <NavLink to="/admin" end>
 
           <FaHome />
 
@@ -82,17 +82,8 @@ function Sidebar() {
 
       </nav>
 
-      <div className="sidebar-footer">
-
-        <NavLink to="/admin/configuracion">
-
-          <FaCog />
-
-          {!collapsed && <span>Configuración</span>}
-
-        </NavLink>
-
-      </div>
+      {/* La sección Configuración se añadirá cuando exista su ruta */}
+      <div className="sidebar-footer" />
 
     </aside>
 

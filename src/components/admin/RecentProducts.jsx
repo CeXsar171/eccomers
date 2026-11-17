@@ -44,11 +44,11 @@ function RecentProducts({ productos }) {
 
             <tr key={producto.id}>
 
-              <td>{producto.name}</td>
+              <td>{producto.nombre}</td>
 
-              <td>${producto.price}</td>
+              <td>${Number(producto.precio || 0).toFixed(2)}</td>
 
-              <td>{producto.category}</td>
+              <td>{producto.categoriaNombre || "Sin categoría"}</td>
 
             </tr>
 

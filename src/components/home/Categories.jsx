@@ -1,42 +1,107 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 import CategoryCard from "./CategoryCard";
-import categories from "../../data/categories";
 
-function Categories() {
+import "../../styles/home/CategoryCard.css";
 
-    return (
+function Categories({
+  categorias,
+  cargando,
+  categoriaActiva,
+  onSeleccionar
+}) {
 
-        <section className="categories">
+  // Sin categorías activas no se ocupa espacio en la página.
+  if (!cargando && categorias.length === 0) {
+    return null;
+  }
 
-            <div className="container">
+  return (
 
-                <h2 className="section-title">
+    <section className="categories" id="categorias">
 
-                    Explora nuestras categorías
+      <div className="container">
 
-                </h2>
+        <h2 className="section-title">
 
-                <div className="categories-grid">
+          Explora nuestras categorías
 
-                    {
+        </h2>
 
-                        categories.map(category => (
+        <p className="section-subtitle">
 
-                            <CategoryCard
-                                key={category.id}
-                                category={category}
-                            />
+          Desliza y elige una categoría para ver sus productos.
 
-                        ))
+        </p>
 
-                    }
+        {cargando ? (
 
-                </div>
+          <div className="categories-skeleton">
 
-            </div>
+            <span /><span /><span /><span />
 
-        </section>
+          </div>
 
-    );
+        ) : (
+
+          <Swiper
+
+            className="categories-carousel"
+
+            modules={[Autoplay, Navigation, Pagination]}
+
+            navigation
+
+            pagination={{ clickable: true }}
+
+            autoplay={{
+              delay: 3500,
+              pauseOnMouseEnter: true,
+              disableOnInteraction: false
+            }}
+
+            rewind
+
+            spaceBetween={18}
+
+            slidesPerView={1.25}
+
+            breakpoints={{
+              480: { slidesPerView: 2.2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 4 }
+            }}
+
+          >
+
+            {categorias.map((categoria) => (
+
+              <SwiperSlide key={categoria.id}>
+
+                <CategoryCard
+                  category={categoria}
+                  activa={categoriaActiva?.id === categoria.id}
+                  onSelect={onSeleccionar}
+                />
+
+              </SwiperSlide>
+
+            ))}
+
+          </Swiper>
+
+        )}
+
+      </div>
+
+    </section>
+
+  );
 
 }
 

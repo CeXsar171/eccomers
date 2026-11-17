@@ -23,23 +23,36 @@
     width:90px;
 }
 
-.logo{
+.sidebar-header{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+
+    padding:20px 12px 0;
+
+}
+
+.sidebar-logo{
 
     display:flex;
     align-items:center;
 
+    color:#fff;
+
 }
 
-.logo h2{
+.sidebar-logo h2{
 
-    font-size:30px;
+    font-size:26px;
     font-weight:bold;
 
     margin:0;
 
 }
 
-.menu-btn{
+.sidebar-toggle{
 
     width:42px;
     height:42px;
@@ -66,7 +79,7 @@
 
 }
 
-.menu-btn:hover{
+.sidebar-toggle:hover{
 
     background:#1E88E5;
 

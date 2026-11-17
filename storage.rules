@@ -1,0 +1,36 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function esAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['tu-correo-admin@ejemplo.com'];
+    }
+
+    // Fotos de productos y categorías: lectura pública, escritura solo admin, solo imágenes < 5 MB.
+    match /{carpeta}/{archivo} {
+      // carpetas permitidas: productos y categorias
+      allow read: if carpeta in ['productos', 'categorias'];
+      allow write: if esAdmin()
+        && carpeta in ['productos', 'categorias']
+        && request.resource.contentType.matches('image/(png|jpeg|webp)')
+        && request.resource.size < 5 * 1024 * 1024;
+      allow delete: if esAdmin()
+        && carpeta in ['productos', 'categorias'];
+    }
+
+    // Imágenes de categorías: mismas reglas que las de productos.
+    match /categorias/{archivo} {
+      allow read: if true;
+      allow write: if esAdmin()
+        && request.resource.contentType.matches('image/(png|jpeg|webp)')
+        && request.resource.size < 5 * 1024 * 1024;
+      allow delete: if esAdmin();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

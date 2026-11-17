@@ -2,6 +2,7 @@ import {
   collection,
   addDoc,
   getDocs,
+  getDoc,
   updateDoc,
   deleteDoc,
   doc,
@@ -17,6 +18,24 @@ const productosRef = collection(
   db,
   "productos"
 );
+
+// Normaliza la lista de imágenes: "imagenes" es la lista completa
+// y "imagen" (la principal) se conserva por compatibilidad.
+const normalizarImagenes = (datos) => {
+
+  const lista =
+    Array.isArray(datos.imagenes)
+      ? datos.imagenes.filter(Boolean)
+      : [];
+
+  if (lista.length === 0 && datos.imagen) {
+    lista.push(datos.imagen);
+  }
+
+  return lista;
+
+};
+
 
 
 /* ==============================
@@ -47,8 +66,13 @@ export const crearProducto = async (producto) => {
       categoriaNombre:
         producto.categoriaNombre || "",
 
+      imagenes:
+        normalizarImagenes(producto),
+
       imagen:
-        producto.imagen || "",
+        producto.imagen ||
+        normalizarImagenes(producto)[0] ||
+        "",
 
       promocion:
         producto.promocion || false,
@@ -158,6 +182,38 @@ export const obtenerProductos = async () => {
 
 
 /* ==============================
+   OBTENER PRODUCTO POR ID
+================================ */
+
+export { normalizarImagenes };
+
+export const obtenerProductoPorId = async (id) => {
+
+  const documento =
+    await getDoc(
+      doc(
+        db,
+        "productos",
+        id
+      )
+    );
+
+  if (!documento.exists()) {
+    return null;
+  }
+
+  return {
+
+    id: documento.id,
+
+    ...documento.data()
+
+  };
+
+};
+
+
+/* ==============================
    EDITAR PRODUCTO
 ================================ */
 
@@ -198,8 +254,13 @@ export const editarProducto = async (
         categoriaNombre:
           datos.categoriaNombre || "",
 
+        imagenes:
+          normalizarImagenes(datos),
+
         imagen:
-          datos.imagen || "",
+          datos.imagen ||
+          normalizarImagenes(datos)[0] ||
+          "",
 
         promocion:
           datos.promocion || false

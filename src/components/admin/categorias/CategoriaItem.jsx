@@ -1,4 +1,5 @@
 import {
+  FaImage,
   FaEdit,
   FaTrash,
   FaToggleOn,
@@ -18,7 +19,25 @@ function CategoriaItem({
     <div className="categoria-row">
 
       <div className="categoria-nombre">
+
+        {categoria.imagen ? (
+
+          <img
+            className="categoria-thumb"
+            src={categoria.imagen}
+            alt={categoria.nombre}
+          />
+
+        ) : (
+
+          <span className="categoria-thumb categoria-thumb-vacia">
+            <FaImage />
+          </span>
+
+        )}
+
         <strong>{categoria.nombre}</strong>
+
       </div>
 
       <div className="categoria-descripcion">

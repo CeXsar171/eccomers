@@ -1,0 +1,152 @@
+/* =========================================
+   Selector de imágenes (productos y categorías)
+========================================= */
+
+.imagen-upload {
+  position: relative;
+}
+
+/* El input real queda oculto; se activa con la etiqueta */
+.imagen-upload input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.btn-seleccionar-imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 22px 16px;
+
+  border: 2px dashed #b6c8e6;
+  border-radius: 14px;
+
+  background: #f5f9ff;
+  color: #1565c0;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.btn-seleccionar-imagen:hover {
+  border-color: #1565c0;
+  background: #eaf3ff;
+}
+
+.imagen-upload input[type="file"]:focus-visible + .btn-seleccionar-imagen {
+  outline: 3px solid rgba(21, 101, 192, 0.35);
+  outline-offset: 2px;
+}
+
+.imagen-upload input[type="file"]:disabled + .btn-seleccionar-imagen {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.imagenes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+
+  margin-top: 14px;
+}
+
+.imagen-item {
+  position: relative;
+
+  aspect-ratio: 1 / 1;
+
+  border: 1px solid #e1e5ea;
+  border-radius: 12px;
+
+  background: #f3f4f6;
+
+  overflow: hidden;
+}
+
+.imagen-item img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+.imagen-principal,
+.imagen-nueva {
+  position: absolute;
+  left: 8px;
+
+  padding: 3px 9px;
+
+  border-radius: 999px;
+
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.imagen-principal {
+  top: 8px;
+  background: #0b3d91;
+}
+
+.imagen-nueva {
+  bottom: 8px;
+  background: #f57c00;
+}
+
+.imagen-quitar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 28px;
+  height: 28px;
+
+  border: none;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(15, 23, 42, 0.7);
+  color: #fff;
+
+  font-size: 12px;
+
+  cursor: pointer;
+
+  transition: background 0.2s;
+}
+
+.imagen-quitar:hover {
+  background: #c62828;
+}
+
+.imagen-quitar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Categoría: una sola imagen, más ancha */
+
+.imagenes-grid.una-imagen {
+  grid-template-columns: minmax(0, 220px);
+}
+
+.imagenes-grid.una-imagen .imagen-item {
+  aspect-ratio: 4 / 3;
+}
