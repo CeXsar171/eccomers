@@ -12,6 +12,7 @@ import {
 
 import { normalizarImagenes } from "../../services/productoService";
 import { formatearPrecio } from "../../utils/catalogo";
+import { parsearEspecificaciones } from "../../utils/especificaciones";
 import { enlaceWhatsApp } from "../../utils/whatsapp";
 
 import "../../styles/products/ProductModal.css";
@@ -25,6 +26,8 @@ function ProductModal({ producto, onCerrar }) {
     normalizarImagenes(producto);
 
   const [indice, setIndice] = useState(0);
+
+  const [pestana, setPestana] = useState("descripcion");
 
   const total = imagenes.length;
 
@@ -82,6 +85,14 @@ function ProductModal({ producto, onCerrar }) {
 
   const agotado =
     Number(producto.stock) === 0;
+
+  // Filas automáticas con los datos que ya existen + las escritas en el panel.
+  const filas = [
+    { clave: "Categoría", valor: producto.categoriaNombre || "Sin categoría" },
+    { clave: "Disponibilidad", valor: agotado ? "Agotado" : "Disponible" },
+    ...(producto.promocion ? [{ clave: "Promoción", valor: "Sí" }] : []),
+    ...parsearEspecificaciones(producto.especificaciones),
+  ];
 
 
   return createPortal(
@@ -231,12 +242,61 @@ function ProductModal({ producto, onCerrar }) {
 
           </div>
 
-          <p className="modal-producto-descripcion">
+          <div className="modal-pestanas" role="tablist">
 
-            {producto.descripcion ||
-              "Este producto no tiene una descripción todavía."}
+            {[["descripcion", "Descripción"], ["especificaciones", "Especificaciones"]].map(
+              ([id, texto]) => (
 
-          </p>
+                <button
+                  type="button"
+                  role="tab"
+                  key={id}
+                  aria-selected={pestana === id}
+                  className={pestana === id ? "pestana activa" : "pestana"}
+                  onClick={() => setPestana(id)}
+                >
+                  {texto}
+                </button>
+
+              )
+            )}
+
+          </div>
+
+          {pestana === "descripcion" ? (
+
+            <p className="modal-producto-descripcion">
+
+              {producto.descripcion ||
+                "Este producto no tiene una descripción todavía."}
+
+            </p>
+
+          ) : (
+
+            <div className="modal-especificaciones">
+
+              <h3>Especificaciones</h3>
+
+              <dl>
+
+                {filas.map(({ clave, valor }) => (
+
+                  <div key={clave + valor}>
+
+                    <dt>{clave}</dt>
+
+                    <dd>{valor}</dd>
+
+                  </div>
+
+                ))}
+
+              </dl>
+
+            </div>
+
+          )}
 
           <div className="modal-producto-acciones">
 

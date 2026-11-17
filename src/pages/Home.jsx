@@ -5,6 +5,7 @@ import MainLayout from "../layouts/MainLayout";
 import HeroBanner from "../components/home/HeroBanner";
 import SearchBar from "../components/home/SearchBar";
 import Categories from "../components/home/Categories";
+import PaymentSection from "../components/home/PaymentSection";
 
 import ProductsSection from "../components/products/ProductsSection";
 import PromotionsSection from "../components/products/PromotionsSection";
@@ -101,6 +102,8 @@ return(
   cargando={cargando}
   onSelectProducto={setProductoActivo}
 />
+
+<PaymentSection/>
 
 {productoActivo && (
 
