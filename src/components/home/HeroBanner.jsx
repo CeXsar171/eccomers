@@ -31,12 +31,6 @@ transition={{duration:1}}
 
 >
 
-<span className="subtitle">
-
-BIENVENIDO A NUESTRA FERRETERÍA
-
-</span>
-
 <h1>
 
 Todo para tu

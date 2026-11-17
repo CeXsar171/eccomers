@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
-import logoMascota from "../../assets/images/logo/logo-mascota.png";
+//import logoMascota from "../../assets/images/logo/logo-mascota.png";
+import logo from "../../assets/images/logo/CentroFerre.png";
 import "../../styles/layout/Navbar.css";
 
 function Navbar() {
@@ -17,20 +18,12 @@ function Navbar() {
         <Link to="/" className="logo" onClick={cerrarMenu}>
 
           <img
-            src={logoMascota}
+            src={logo}
             alt="Logo de Su Centro Ferretero"
-            className="logo-img"
-            width="60"
-            height="60"
+            className="img"
+            width="100"
+            height="70"
           />
-
-          <div>
-            <h2>SU CENTRO
-              <br />
-              FERRETERO
-            </h2>
-            <span>Todo para tu construcción</span>
-          </div>
 
         </Link>
 
