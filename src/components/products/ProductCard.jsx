@@ -20,7 +20,7 @@ function ProductCard({ product, onSelect }) {
     normalizarImagenes(product);
 
   const imagen =
-    imagenes[0] || "";
+    product.imagen || imagenes[0] || "";
 
   const nombre =
     product.nombre || "Producto sin nombre";

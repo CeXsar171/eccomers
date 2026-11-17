@@ -14,10 +14,15 @@ import "../../../styles/admin/ImagePicker.css";
 
 import {
   subirImagenProducto,
+  crearMiniatura,
   validarImagen
 } from "../../../services/storageService";
 
-const MAXIMO_IMAGENES = 6;
+const MAXIMO_IMAGENES = 5;
+
+// Una "foto" ocupa espacio dentro del documento de Firestore (límite 1 MiB).
+// Se deja margen para el resto de los datos del producto.
+const PESO_MAXIMO_FOTOS = 900000;
 
 
 function ProductoForm({
@@ -289,6 +294,24 @@ function ProductoForm({
         ...urlsNuevas
       ];
 
+      const pesoTotal = imagenes.reduce(
+        (suma, url) => suma + url.length,
+        0
+      );
+
+      if (pesoTotal > PESO_MAXIMO_FOTOS) {
+
+        throw new Error(
+          "Las fotos pesan demasiado en conjunto. Quita alguna o usa fotos más simples."
+        );
+
+      }
+
+      // La primera foto se guarda además como miniatura liviana,
+      // que usan la tabla del panel y las tarjetas.
+      const miniatura =
+        await crearMiniatura(imagenes[0]);
+
       await onGuardar({
 
         nombre: nombreLimpio,
@@ -305,7 +328,7 @@ function ProductoForm({
 
         imagenes,
 
-        imagen: imagenes[0] || "",
+        imagen: miniatura,
 
         promocion
 
@@ -539,7 +562,7 @@ function ProductoForm({
         </div>
 
         <small className="form-help">
-          JPG, PNG o WEBP. Máximo 5 MB cada una.
+          JPG, PNG o WEBP. Se reducen automáticamente al guardar. Máximo 5 fotos.
           La primera será la imagen principal.
         </small>
 

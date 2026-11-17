@@ -301,7 +301,7 @@ function CategoriaForm({
         </div>
 
         <small className="form-help">
-          JPG, PNG o WEBP. Máximo 5 MB.
+          JPG, PNG o WEBP. Se reduce automáticamente al guardar.
           Se muestra en el carrusel de la página principal.
         </small>
 

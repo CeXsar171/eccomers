@@ -27,9 +27,16 @@
     color:#fff;
 }
 
-.logo-icon{
-    font-size:40px;
-    color:#F57C00;
+.logo-img{
+    flex-shrink:0;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#fff;
+    border:3px solid #F57C00;
+    object-fit:cover;
+    object-position:top;
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
 }
 
 .logo h2{
@@ -148,6 +155,18 @@
 
     .nav-menu a{
         font-size:26px;
+    }
+
+}
+@media (max-width:480px){
+
+    .logo-img{
+        width:52px;
+        height:52px;
+    }
+
+    .logo h2{
+        font-size:20px;
     }
 
 }

@@ -70,7 +70,9 @@ export const crearProducto = async (producto) => {
         normalizarImagenes(producto),
 
       imagen:
-        normalizarImagenes(producto)[0] || "",
+        producto.imagen ||
+        normalizarImagenes(producto)[0] ||
+        "",
 
       promocion:
         producto.promocion || false,
@@ -256,7 +258,9 @@ export const editarProducto = async (
           normalizarImagenes(datos),
 
         imagen:
-          normalizarImagenes(datos)[0] || "",
+          datos.imagen ||
+          normalizarImagenes(datos)[0] ||
+          "",
 
         promocion:
           datos.promocion || false

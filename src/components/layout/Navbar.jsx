@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes, FaTools } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
+import logoMascota from "../../assets/images/logo/logo-mascota.png";
 import "../../styles/layout/Navbar.css";
 
 function Navbar() {
@@ -15,7 +16,13 @@ function Navbar() {
 
         <Link to="/" className="logo" onClick={cerrarMenu}>
 
-          <FaTools className="logo-icon" />
+          <img
+            src={logoMascota}
+            alt="Logo de Su Centro Ferretero"
+            className="logo-img"
+            width="60"
+            height="60"
+          />
 
           <div>
             <h2>SU CENTRO
