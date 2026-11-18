@@ -4,6 +4,8 @@ import { FaSearch, FaTimes } from "react-icons/fa";
 
 import ProductCard from "./ProductCard";
 
+import { agruparPorCategoria } from "../../utils/catalogo";
+
 import "../../styles/products/ProductsSection.css";
 
 const POR_PAGINA = 9;
@@ -11,6 +13,7 @@ const POR_PAGINA = 9;
 
 function ProductsSection({
   productos,
+  categorias = [],
   cargando,
   error,
   busqueda,
@@ -18,7 +21,8 @@ function ProductsSection({
   onLimpiarBusqueda,
   onLimpiarCategoria,
   onLimpiarTodo,
-  onSelectProducto
+  onSelectProducto,
+  onVerMasCategoria
 }) {
 
   // Cantidad visible; vuelve a 9 cada vez que cambian los filtros.
@@ -159,6 +163,53 @@ function ProductsSection({
             )}
 
           </div>
+
+        ) : !hayFiltros ? (
+
+          // Sin filtros: máximo 6 por categoría y "Ver más" para abrir la categoría.
+          agruparPorCategoria(productos, categorias).map(
+            ({ categoria, productos: grupo, total }) => (
+
+              <div className="categoria-grupo" key={categoria?.id || "otros"}>
+
+                <h3 className="categoria-grupo-titulo">
+                  {categoria?.nombre || "Otros productos"}
+                </h3>
+
+                <div className="products-grid">
+
+                  {grupo.map((producto) => (
+
+                    <ProductCard
+                      key={producto.id}
+                      product={producto}
+                      onSelect={onSelectProducto}
+                    />
+
+                  ))}
+
+                </div>
+
+                {categoria && total > grupo.length && (
+
+                  <div className="ver-mas-contenedor">
+
+                    <button
+                      type="button"
+                      className="btn-ver-mas"
+                      onClick={() => onVerMasCategoria(categoria)}
+                    >
+                      Ver más de {categoria.nombre} ({total})
+                    </button>
+
+                  </div>
+
+                )}
+
+              </div>
+
+            )
+          )
 
         ) : (
 

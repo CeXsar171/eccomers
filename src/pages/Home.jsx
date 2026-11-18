@@ -1,11 +1,10 @@
 import { useCallback, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 
 import HeroBanner from "../components/home/HeroBanner";
-import SearchBar from "../components/home/SearchBar";
 import Categories from "../components/home/Categories";
-import PaymentSection from "../components/home/PaymentSection";
 
 import ProductsSection from "../components/products/ProductsSection";
 import PromotionsSection from "../components/products/PromotionsSection";
@@ -19,7 +18,12 @@ export default function Home(){
 
 const { productos, categorias, cargando, error } = useCatalogo();
 
-const [busqueda, setBusqueda] = useState("");
+// El buscador vive en la barra superior y guarda el texto en la URL (?q=).
+const [params, setParams] = useSearchParams();
+
+const busqueda = params.get("q") || "";
+
+const setBusqueda = (texto) => setParams(texto ? { q: texto } : {}, { replace: true });
 
 const [categoriaActiva, setCategoriaActiva] = useState(null);
 
@@ -70,14 +74,6 @@ return(
 
 <HeroBanner/>
 
-<SearchBar
-  valor={busqueda}
-  onChange={setBusqueda}
-  onBuscar={irAProductos}
-  total={resultados.length}
-  hayBusqueda={Boolean(busqueda.trim())}
-/>
-
 <Categories
   categorias={categorias}
   cargando={cargando}
@@ -87,6 +83,8 @@ return(
 
 <ProductsSection
   productos={resultados}
+  categorias={categorias}
+  onVerMasCategoria={seleccionarCategoria}
   cargando={cargando}
   error={error}
   busqueda={busqueda}
@@ -102,8 +100,6 @@ return(
   cargando={cargando}
   onSelectProducto={setProductoActivo}
 />
-
-<PaymentSection/>
 
 {productoActivo && (
 

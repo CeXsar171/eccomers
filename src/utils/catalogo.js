@@ -7,6 +7,12 @@ export const normalizarTexto = (texto = "") =>
     .trim();
 
 
+const perteneceA = (producto, categoria) =>
+  producto.categoriaId === categoria.id ||
+  normalizarTexto(producto.categoriaNombre) ===
+    normalizarTexto(categoria.nombre);
+
+
 // Filtra por categoría activa y por texto (nombre o categoría).
 // Cada palabra escrita debe aparecer en el nombre o la categoría,
 // en cualquier orden: "taladro electrico" encuentra "Taladro eléctrico".
@@ -21,24 +27,10 @@ export const filtrarProductos = (
       .split(/\s+/)
       .filter(Boolean);
 
-  const categoriaNormalizada =
-    categoria
-      ? normalizarTexto(categoria.nombre)
-      : "";
-
   return productos.filter((producto) => {
 
-    if (categoria) {
-
-      const coincide =
-        producto.categoriaId === categoria.id ||
-        normalizarTexto(producto.categoriaNombre) ===
-          categoriaNormalizada;
-
-      if (!coincide) {
-        return false;
-      }
-
+    if (categoria && !perteneceA(producto, categoria)) {
+      return false;
     }
 
     if (palabras.length === 0) {
@@ -60,3 +52,35 @@ export const filtrarProductos = (
 
 export const formatearPrecio = (valor) =>
   `$${Number(valor || 0).toFixed(2)}`;
+
+
+// Un grupo por categoría con máximo `maximo` productos (total = cuántos hay).
+// Los productos sin categoría conocida van a un grupo final (categoria: null)
+// sin límite, para que ninguno quede oculto.
+export const agruparPorCategoria = (productos, categorias, maximo = 6) => {
+
+  const grupos = categorias
+    .map((categoria) => {
+
+      const propios = productos.filter((p) => perteneceA(p, categoria));
+
+      return {
+        categoria,
+        productos: propios.slice(0, maximo),
+        total: propios.length
+      };
+
+    })
+    .filter((grupo) => grupo.total > 0);
+
+  const sueltos = productos.filter(
+    (p) => !categorias.some((c) => perteneceA(p, c))
+  );
+
+  if (sueltos.length > 0) {
+    grupos.push({ categoria: null, productos: sueltos, total: sueltos.length });
+  }
+
+  return grupos;
+
+};
