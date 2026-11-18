@@ -2,7 +2,7 @@
 
 .navbar{
     width:100%;
-    background:#0B3D91;
+    background:linear-gradient(90deg,#0B3D91,#0d4cb3);
     position:sticky;
     top:0;
     z-index:1000;
@@ -167,6 +167,64 @@
 
     .logo h2{
         font-size:20px;
+    }
+
+}
+
+
+/* Buscador en la barra superior */
+
+.nav-search{
+    display:flex;
+    flex:1;
+    max-width:360px;
+    margin:0 20px;
+    background:#fff;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.nav-search input{
+    flex:1;
+    min-width:0;
+    padding:11px 14px;
+    border:none;
+    outline:none;
+    font-family:inherit;
+    font-size:15px;
+}
+
+.nav-search input::-webkit-search-cancel-button{ display:none; }
+
+.nav-search button{
+    border:none;
+    padding:0 14px;
+    background:#F57C00;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+}
+
+@media (max-width:900px){
+
+    .navbar-container{
+        flex-wrap:wrap;
+        height:auto;
+        min-height:70px;
+        padding:8px 0;
+    }
+
+    .nav-search{
+        order:3;
+        flex-basis:100%;
+        max-width:none;
+        margin:8px 0 4px;
+    }
+
+    .nav-menu{
+        position:absolute;
+        top:100%;
+        height:100vh;
     }
 
 }

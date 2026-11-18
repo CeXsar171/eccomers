@@ -1,14 +1,25 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
-//import logoMascota from "../../assets/images/logo/logo-mascota.png";
-import logo from "../../assets/images/logo/CentroFerre.png";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { FaBars, FaTimes, FaSearch } from "react-icons/fa";
+import logoMascota from "../../assets/images/logo/logo-mascota.png";
 import "../../styles/layout/Navbar.css";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const cerrarMenu = () => setMenuOpen(false);
+
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const q = params.get("q") || "";
+
+  const buscar = (e) => {
+    e.preventDefault();
+    cerrarMenu();
+    const texto = String(new FormData(e.currentTarget).get("q") || "").trim();
+    navigate(texto ? `/?q=${encodeURIComponent(texto)}` : "/");
+    setTimeout(() => document.getElementById("productos")?.scrollIntoView({ behavior: "smooth" }), 80);
+  };
 
   return (
     <header className="navbar">
@@ -18,14 +29,34 @@ function Navbar() {
         <Link to="/" className="logo" onClick={cerrarMenu}>
 
           <img
-            src={logo}
+            src={logoMascota}
             alt="Logo de Su Centro Ferretero"
-            className="img"
-            width="100"
-            height="70"
+            className="logo-img"
+            width="60"
+            height="60"
           />
 
+          <div>
+            <h2>SU CENTRO
+              <br />
+              FERRETERO
+            </h2>
+            <span>Todo para tu construcción</span>
+          </div>
+
         </Link>
+
+        <form className="nav-search" key={q} onSubmit={buscar} role="search">
+          <input
+            type="search"
+            name="q"
+            defaultValue={q}
+            placeholder="¿Qué necesitas hoy?"
+            aria-label="Buscar productos por nombre o categoría"
+            autoComplete="off"
+          />
+          <button type="submit" aria-label="Buscar"><FaSearch /></button>
+        </form>
 
         <button
           type="button"

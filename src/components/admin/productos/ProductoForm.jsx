@@ -34,6 +34,8 @@ function ProductoForm({
 
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  const [marca, setMarca] = useState("");
+  const [especificaciones, setEspecificaciones] = useState("");
   const [precio, setPrecio] = useState("");
   const [stock, setStock] = useState("");
   const [categoriaId, setCategoriaId] = useState("");
@@ -59,6 +61,8 @@ function ProductoForm({
 
       setNombre(productoEditar.nombre || "");
       setDescripcion(productoEditar.descripcion || "");
+      setMarca(productoEditar.marca || "");
+      setEspecificaciones(productoEditar.especificaciones || "");
       setPrecio(productoEditar.precio ?? "");
       setStock(productoEditar.stock ?? "");
       setCategoriaId(productoEditar.categoriaId || "");
@@ -79,7 +83,9 @@ function ProductoForm({
     } else {
 
       setNombre("");
+      setMarca("");
       setDescripcion("");
+      setEspecificaciones("");
       setPrecio("");
       setStock("");
       setCategoriaId("");
@@ -318,6 +324,10 @@ function ProductoForm({
 
         descripcion: descripcionLimpia,
 
+        marca: marca.trim(),
+
+        especificaciones: especificaciones.trim(),
+
         precio: precioNumero,
 
         stock: stockNumero,
@@ -412,6 +422,25 @@ function ProductoForm({
 
       <div className="form-group">
 
+        <label htmlFor="producto-marca">
+          Marca
+        </label>
+
+        <input
+          id="producto-marca"
+          type="text"
+          value={marca}
+          onChange={(e) => setMarca(e.target.value)}
+          placeholder="Ej: Truper"
+          maxLength={50}
+          disabled={guardando}
+        />
+
+      </div>
+
+
+      <div className="form-group">
+
         <label htmlFor="producto-descripcion">
           Descripción
         </label>
@@ -425,6 +454,29 @@ function ProductoForm({
           maxLength={500}
           disabled={guardando}
         />
+
+      </div>
+
+
+      <div className="form-group">
+
+        <label htmlFor="producto-especificaciones">
+          Especificaciones (opcional)
+        </label>
+
+        <textarea
+          id="producto-especificaciones"
+          value={especificaciones}
+          onChange={(e) => setEspecificaciones(e.target.value)}
+          placeholder={"Una por línea, con dos puntos:\nMaterial: Acero\nColor: Azul\nGarantía: 1 año"}
+          rows="5"
+          maxLength={800}
+          disabled={guardando}
+        />
+
+        <small className="form-help">
+          Se muestran en la pestaña "Especificaciones" del producto.
+        </small>
 
       </div>
 

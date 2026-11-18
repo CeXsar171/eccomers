@@ -54,6 +54,12 @@ export const crearProducto = async (producto) => {
       descripcion:
         producto.descripcion?.trim() || "",
 
+      especificaciones:
+        producto.especificaciones?.trim() || "",
+
+      marca:
+        producto.marca?.trim() || "",
+
       precio:
         Number(producto.precio) || 0,
 
@@ -241,6 +247,12 @@ export const editarProducto = async (
 
         descripcion:
           datos.descripcion?.trim() || "",
+
+        especificaciones:
+          datos.especificaciones?.trim() || "",
+
+        marca:
+          datos.marca?.trim() || "",
 
         precio:
           Number(datos.precio) || 0,

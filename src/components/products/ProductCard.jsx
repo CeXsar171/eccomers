@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 import {
   FaImage,
@@ -14,7 +15,9 @@ import { enlaceWhatsApp } from "../../utils/whatsapp";
 import "../../styles/products/ProductCard.css";
 
 
-function ProductCard({ product, onSelect }) {
+function ProductCard({ product }) {
+
+  const navigate = useNavigate();
 
   const imagenes =
     normalizarImagenes(product);
@@ -31,7 +34,7 @@ function ProductCard({ product, onSelect }) {
   const descripcion =
     product.descripcion || "Sin descripción disponible.";
 
-  const abrir = () => onSelect?.(product);
+  const abrir = () => navigate(`/producto/${product.id}`);
 
   const teclado = (e) => {
 
@@ -120,6 +123,8 @@ function ProductCard({ product, onSelect }) {
         <span className="product-category">
 
           {categoria}
+
+          {product.marca && ` · ${product.marca}`}
 
         </span>
 

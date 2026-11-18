@@ -10,10 +10,11 @@
     max-width:100%;
 
     background:#fff;
-    border-radius:18px;
+    border-radius:22px;
     overflow:hidden;
 
-    box-shadow:var(--sombra);
+    border:1px solid var(--borde);
+    box-shadow:0 4px 18px rgba(11,61,145,.07);
 
     cursor:pointer;
 

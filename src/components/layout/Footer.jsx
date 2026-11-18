@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaFacebookF, FaInstagram, FaWhatsapp, FaTiktok } from "react-icons/fa";
 import "../../styles/layout/Footer.css";
 import logo from "../../assets/images/logo/CentroFerre.png";
 
@@ -67,28 +68,20 @@ function Footer() {
 
           <div className="social-links">
 
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Facebook
+            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook">
+              <FaFacebookF />
             </a>
 
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Instagram
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram">
+              <FaInstagram />
             </a>
 
-            <a
-              href="https://wa.me/593999999999"
-              target="_blank"
-              rel="noreferrer"
-            >
-              WhatsApp
+            <a href="https://tiktok.com" target="_blank" rel="noreferrer" aria-label="TikTok" title="TikTok">
+              <FaTiktok />
+            </a>
+
+            <a href="https://wa.me/593999999999" target="_blank" rel="noreferrer" aria-label="WhatsApp" title="WhatsApp">
+              <FaWhatsapp />
             </a>
 
           </div>

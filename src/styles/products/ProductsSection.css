@@ -174,3 +174,24 @@
 
   font-size:16px;
 }
+
+
+.categoria-grupo{
+    margin-top:44px;
+}
+
+.categoria-grupo:first-of-type{
+    margin-top:10px;
+}
+
+.categoria-grupo-titulo{
+    display:inline-block;
+
+    margin-bottom:20px;
+    padding-bottom:6px;
+
+    border-bottom:3px solid var(--naranja);
+
+    color:var(--azul);
+    font-size:24px;
+}

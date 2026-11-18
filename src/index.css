@@ -24,7 +24,7 @@ html{
 
 body{
     font-family:'Segoe UI',Arial,Helvetica,sans-serif;
-    background:#f5f5f5;
+    background:#f6f8fc;
     color:var(--texto);
 }
 
@@ -43,6 +43,17 @@ body{
     font-size:clamp(28px,4vw,38px);
     font-weight:800;
     letter-spacing:-.01em;
+}
+
+/* Barra de acento bajo cada título */
+.section-title::after{
+    content:"";
+    display:block;
+    width:64px;
+    height:5px;
+    margin:12px auto 0;
+    border-radius:5px;
+    background:linear-gradient(90deg,var(--naranja),#ffb25e);
 }
 
 .section-subtitle{

@@ -1,0 +1,206 @@
+.payment{
+
+    padding:90px 0;
+
+    background:white;
+
+}
+
+.payment-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:30px;
+
+}
+
+.payment-card{
+
+    background:#0B3D91;
+
+    color:white;
+
+    text-align:center;
+
+    padding:40px;
+
+    border:3px solid transparent;
+
+    border-radius:15px;
+
+    font-family:inherit;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.payment-card.activa{
+
+    border-color:#F57C00;
+
+}
+
+.payment-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.payment-card svg{
+
+    font-size:60px;
+
+    color:#F57C00;
+
+    margin-bottom:20px;
+
+}
+
+/* Panel con el detalle del método elegido (como "Medios de pago") */
+
+.payment-panel{
+
+    margin-top:30px;
+
+    padding:34px 30px;
+
+    background:#0B3D91;
+
+    border-radius:15px;
+
+    color:white;
+
+    animation:modal-fondo .25s ease;
+
+}
+
+.payment-panel h4{
+
+    display:inline-block;
+
+    margin-bottom:24px;
+    padding-bottom:8px;
+
+    border-bottom:3px solid #e53935;
+
+    font-size:20px;
+
+}
+
+.payment-aviso{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+    font-size:22px;
+    font-weight:600;
+
+}
+
+.payment-aviso svg{
+
+    flex-shrink:0;
+
+    color:#F57C00;
+
+    font-size:34px;
+
+}
+
+.payment-fichas{
+
+    display:flex;
+    flex-wrap:wrap;
+    gap:22px;
+
+    list-style:none;
+
+}
+
+.payment-fichas li{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+
+    max-width:96px;
+
+    text-align:center;
+
+}
+
+.ficha{
+
+    position:relative;
+
+    display:grid;
+    place-items:center;
+
+    width:64px;
+    height:64px;
+
+    border-radius:50%;
+
+    background:white;
+
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:-.02em;
+
+}
+
+.tarjeta-visa{ color:#1a1f71; font-style:italic; font-size:15px; }
+.tarjeta-diners{ color:#0079be; font-size:13px; }
+.tarjeta-discover{ color:#f58220; font-size:9.5px; }
+.tarjeta-amex{ background:#2e77bc; color:white; }
+
+/* Mastercard: dos círculos que se cruzan */
+.tarjeta-mastercard::before,
+.tarjeta-mastercard::after{
+
+    content:"";
+
+    position:absolute;
+    top:50%;
+
+    width:26px;
+    height:26px;
+
+    margin-top:-13px;
+
+    border-radius:50%;
+
+}
+
+.tarjeta-mastercard::before{ left:10px; background:#eb001b; }
+
+.tarjeta-mastercard::after{ right:10px; background:#f79e1b; opacity:.9; }
+
+.ficha-banco{
+
+    color:#0B3D91;
+
+    font-size:28px;
+
+}
+
+.payment-fichas small{
+
+    font-size:13px;
+    line-height:1.25;
+
+}
+
+@media (max-width:600px){
+
+    .payment{ padding:60px 0; }
+
+    .payment-aviso{ font-size:18px; }
+
+}
