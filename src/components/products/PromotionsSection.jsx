@@ -4,8 +4,7 @@ import "../../styles/products/Promotions.css";
 
 function PromotionsSection({
   productos,
-  cargando,
-  onSelectProducto
+  cargando
 }) {
 
     const promociones =
@@ -49,7 +48,6 @@ function PromotionsSection({
                             <ProductCard
                                 key={producto.id}
                                 product={producto}
-                                onSelect={onSelectProducto}
                             />
 
                         ))}

@@ -21,7 +21,6 @@ function ProductsSection({
   onLimpiarBusqueda,
   onLimpiarCategoria,
   onLimpiarTodo,
-  onSelectProducto,
   onVerMasCategoria
 }) {
 
@@ -183,7 +182,6 @@ function ProductsSection({
                     <ProductCard
                       key={producto.id}
                       product={producto}
-                      onSelect={onSelectProducto}
                     />
 
                   ))}
@@ -222,7 +220,6 @@ function ProductsSection({
                 <ProductCard
                   key={producto.id}
                   product={producto}
-                  onSelect={onSelectProducto}
                 />
 
               ))}

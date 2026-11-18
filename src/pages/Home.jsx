@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
@@ -9,7 +9,6 @@ import Brands from "../components/home/Brands";
 
 import ProductsSection from "../components/products/ProductsSection";
 import PromotionsSection from "../components/products/PromotionsSection";
-import ProductModal from "../components/products/ProductModal";
 
 import useCatalogo from "../hooks/useCatalogo";
 
@@ -27,8 +26,6 @@ const busqueda = params.get("q") || "";
 const setBusqueda = (texto) => setParams(texto ? { q: texto } : {}, { replace: true });
 
 const [categoriaActiva, setCategoriaActiva] = useState(null);
-
-const [productoActivo, setProductoActivo] = useState(null);
 
 const marcas = useMemo(() => listarMarcas(productos), [productos]);
 
@@ -66,11 +63,6 @@ const limpiarTodo = () => {
 
 };
 
-const cerrarModal = useCallback(
-  () => setProductoActivo(null),
-  []
-);
-
 return(
 
 <MainLayout>
@@ -104,24 +96,13 @@ return(
   onLimpiarBusqueda={() => setBusqueda("")}
   onLimpiarCategoria={() => setCategoriaActiva(null)}
   onLimpiarTodo={limpiarTodo}
-  onSelectProducto={setProductoActivo}
 />
 
 <PromotionsSection
   productos={productos}
   cargando={cargando}
-  onSelectProducto={setProductoActivo}
 />
 
-{productoActivo && (
-
-  <ProductModal
-    key={productoActivo.id}
-    producto={productoActivo}
-    onCerrar={cerrarModal}
-  />
-
-)}
 
 </MainLayout>
 

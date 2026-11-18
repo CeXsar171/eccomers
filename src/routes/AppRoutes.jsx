@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "../pages/Home";
+import ProductoDetalle from "../pages/ProductoDetalle";
 import Login from "../pages/Login";
 import QuienesSomos from "../pages/QuienesSomos";
 import FormasPago from "../pages/FormasPago";
@@ -21,6 +22,7 @@ function AppRoutes() {
       <Routes>
 
         <Route path="/" element={<Home />} />
+        <Route path="/producto/:id" element={<ProductoDetalle />} />
         <Route path="/quienes-somos" element={<QuienesSomos />} /> 
         <Route path="/formas-pago" element={<FormasPago />} />
         <Route path="/ubicacion" element={<Ubicacion />} />
