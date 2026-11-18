@@ -5,6 +5,7 @@ import MainLayout from "../layouts/MainLayout";
 
 import HeroBanner from "../components/home/HeroBanner";
 import Categories from "../components/home/Categories";
+import Brands from "../components/home/Brands";
 
 import ProductsSection from "../components/products/ProductsSection";
 import PromotionsSection from "../components/products/PromotionsSection";
@@ -12,7 +13,7 @@ import ProductModal from "../components/products/ProductModal";
 
 import useCatalogo from "../hooks/useCatalogo";
 
-import { filtrarProductos } from "../utils/catalogo";
+import { filtrarProductos, listarMarcas } from "../utils/catalogo";
 
 export default function Home(){
 
@@ -28,6 +29,8 @@ const setBusqueda = (texto) => setParams(texto ? { q: texto } : {}, { replace: t
 const [categoriaActiva, setCategoriaActiva] = useState(null);
 
 const [productoActivo, setProductoActivo] = useState(null);
+
+const marcas = useMemo(() => listarMarcas(productos), [productos]);
 
 const resultados = useMemo(
   () => filtrarProductos(productos, busqueda, categoriaActiva),
@@ -79,6 +82,15 @@ return(
   cargando={cargando}
   categoriaActiva={categoriaActiva}
   onSeleccionar={seleccionarCategoria}
+/>
+
+<Brands
+  marcas={marcas}
+  busqueda={busqueda}
+  onSeleccionar={(marca) => {
+    setBusqueda(marca);
+    if (marca) irAProductos();
+  }}
 />
 
 <ProductsSection

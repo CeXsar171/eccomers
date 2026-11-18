@@ -34,6 +34,7 @@ function ProductoForm({
 
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  const [marca, setMarca] = useState("");
   const [especificaciones, setEspecificaciones] = useState("");
   const [precio, setPrecio] = useState("");
   const [stock, setStock] = useState("");
@@ -60,6 +61,7 @@ function ProductoForm({
 
       setNombre(productoEditar.nombre || "");
       setDescripcion(productoEditar.descripcion || "");
+      setMarca(productoEditar.marca || "");
       setEspecificaciones(productoEditar.especificaciones || "");
       setPrecio(productoEditar.precio ?? "");
       setStock(productoEditar.stock ?? "");
@@ -81,6 +83,7 @@ function ProductoForm({
     } else {
 
       setNombre("");
+      setMarca("");
       setDescripcion("");
       setEspecificaciones("");
       setPrecio("");
@@ -321,6 +324,8 @@ function ProductoForm({
 
         descripcion: descripcionLimpia,
 
+        marca: marca.trim(),
+
         especificaciones: especificaciones.trim(),
 
         precio: precioNumero,
@@ -409,6 +414,25 @@ function ProductoForm({
           onChange={(e) => setNombre(e.target.value)}
           placeholder="Ej: Taladro eléctrico"
           maxLength={100}
+          disabled={guardando}
+        />
+
+      </div>
+
+
+      <div className="form-group">
+
+        <label htmlFor="producto-marca">
+          Marca
+        </label>
+
+        <input
+          id="producto-marca"
+          type="text"
+          value={marca}
+          onChange={(e) => setMarca(e.target.value)}
+          placeholder="Ej: Truper"
+          maxLength={50}
           disabled={guardando}
         />
 

@@ -13,7 +13,7 @@ const perteneceA = (producto, categoria) =>
     normalizarTexto(categoria.nombre);
 
 
-// Filtra por categoría activa y por texto (nombre o categoría).
+// Filtra por categoría activa y por texto (nombre, categoría o marca).
 // Cada palabra escrita debe aparecer en el nombre o la categoría,
 // en cualquier orden: "taladro electrico" encuentra "Taladro eléctrico".
 export const filtrarProductos = (
@@ -38,7 +38,7 @@ export const filtrarProductos = (
     }
 
     const campo = normalizarTexto(
-      `${producto.nombre || ""} ${producto.categoriaNombre || ""}`
+      `${producto.nombre || ""} ${producto.categoriaNombre || ""} ${producto.marca || ""}`
     );
 
     return palabras.every(
@@ -82,5 +82,26 @@ export const agruparPorCategoria = (productos, categorias, maximo = 6) => {
   }
 
   return grupos;
+
+};
+
+
+// Marcas distintas de los productos, ordenadas; "Truper" y "truper " cuentan como una.
+export const listarMarcas = (productos) => {
+
+  const porClave = new Map();
+
+  for (const { marca } of productos) {
+
+    const limpia = (marca || "").trim();
+    const clave = normalizarTexto(limpia);
+
+    if (clave && !porClave.has(clave)) {
+      porClave.set(clave, limpia);
+    }
+
+  }
+
+  return [...porClave.values()].sort((a, b) => a.localeCompare(b, "es"));
 
 };

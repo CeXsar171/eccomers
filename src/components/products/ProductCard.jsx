@@ -121,6 +121,8 @@ function ProductCard({ product, onSelect }) {
 
           {categoria}
 
+          {product.marca && ` · ${product.marca}`}
+
         </span>
 
         <h3>

@@ -57,6 +57,9 @@ export const crearProducto = async (producto) => {
       especificaciones:
         producto.especificaciones?.trim() || "",
 
+      marca:
+        producto.marca?.trim() || "",
+
       precio:
         Number(producto.precio) || 0,
 
@@ -247,6 +250,9 @@ export const editarProducto = async (
 
         especificaciones:
           datos.especificaciones?.trim() || "",
+
+        marca:
+          datos.marca?.trim() || "",
 
         precio:
           Number(datos.precio) || 0,

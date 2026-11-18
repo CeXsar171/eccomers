@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { agruparPorCategoria } from "./catalogo.js";
+import { agruparPorCategoria, filtrarProductos, listarMarcas } from "./catalogo.js";
 
 const categorias = [
   { id: "c1", nombre: "Herramientas" },
@@ -30,4 +30,19 @@ test("productos sin categoría conocida van a 'Otros' sin límite", () => {
   assert.equal(grupos.length, 1);
   assert.equal(grupos[0].categoria, null);
   assert.equal(grupos[0].productos.length, 7);
+});
+
+test("la búsqueda también encuentra por marca, sin tildes ni mayúsculas", () => {
+  const productos = [
+    { id: "1", nombre: "Taladro", marca: "Truper" },
+    { id: "2", nombre: "Martillo", marca: "Stanley" },
+  ];
+  assert.deepEqual(filtrarProductos(productos, "TRUPER").map((p) => p.id), ["1"]);
+});
+
+test("listarMarcas: únicas, sin vacías, ordenadas, sin duplicar por mayúsculas", () => {
+  const productos = [
+    { marca: "Truper" }, { marca: "truper " }, { marca: "" }, {}, { marca: "Bosch" },
+  ];
+  assert.deepEqual(listarMarcas(productos), ["Bosch", "Truper"]);
 });

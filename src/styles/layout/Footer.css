@@ -1,5 +1,5 @@
 .footer{
-    background:#0D47A1;
+    background:linear-gradient(160deg,#0B3D91,#07245a);
     color:#fff;
     padding:35px 40px 15px;
 }
@@ -73,8 +73,26 @@
 
 .social-links{
     display:flex;
-    flex-direction:column;
-    gap:10px;
+    flex-wrap:wrap;
+    gap:12px;
+}
+
+.footer-section .social-links a{
+    display:grid;
+    place-items:center;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+    font-size:20px;
+    transition:transform .25s, background .25s;
+}
+
+.footer-section .social-links a:hover{
+    padding-left:0;
+    color:#fff;
+    background:var(--naranja);
+    transform:translateY(-4px);
 }
 
 /* Línea */

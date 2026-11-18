@@ -89,6 +89,7 @@ function ProductModal({ producto, onCerrar }) {
   // Filas automáticas con los datos que ya existen + las escritas en el panel.
   const filas = [
     { clave: "Categoría", valor: producto.categoriaNombre || "Sin categoría" },
+    ...(producto.marca ? [{ clave: "Marca", valor: producto.marca }] : []),
     { clave: "Disponibilidad", valor: agotado ? "Agotado" : "Disponible" },
     ...(producto.promocion ? [{ clave: "Promoción", valor: "Sí" }] : []),
     ...parsearEspecificaciones(producto.especificaciones),
