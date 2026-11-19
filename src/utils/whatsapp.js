@@ -17,3 +17,4 @@ export const enlaceWhatsApp = (producto) => {
   return `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(mensaje)}`;
 
 };
+
