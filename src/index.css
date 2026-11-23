@@ -25,6 +25,7 @@ html{
 body{
     font-family:'Plus Jakarta Sans','Segoe UI',Arial,Helvetica,sans-serif;
     -webkit-font-smoothing:antialiased;
+    font-family:'Segoe UI',Arial,Helvetica,sans-serif;
     background:#f6f8fc;
     color:var(--texto);
 }

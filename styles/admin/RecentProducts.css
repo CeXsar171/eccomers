@@ -1,0 +1,41 @@
+.recent-products{
+
+background:white;
+
+padding:25px;
+
+border-radius:15px;
+
+box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+margin-top:30px;
+
+}
+
+.recent-products table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:20px;
+
+}
+
+.recent-products th{
+
+background:#0B3D91;
+
+color:white;
+
+padding:12px;
+
+}
+
+.recent-products td{
+
+padding:12px;
+
+border-bottom:1px solid #eee;
+
+}

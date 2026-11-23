@@ -23,6 +23,10 @@
 
 .product-card:hover{
     transform:translateY(-6px);
+    transition:box-shadow .3s;
+}
+
+.product-card:hover{
     box-shadow:var(--sombra-fuerte);
 }
 
