@@ -23,6 +23,8 @@ html{
 }
 
 body{
+    font-family:'Plus Jakarta Sans','Segoe UI',Arial,Helvetica,sans-serif;
+    -webkit-font-smoothing:antialiased;
     font-family:'Segoe UI',Arial,Helvetica,sans-serif;
     background:#f6f8fc;
     color:var(--texto);
@@ -104,4 +106,10 @@ input:focus-visible,
 [role="button"]:focus-visible{
     outline:3px solid rgba(21,101,192,.4);
     outline-offset:2px;
+}
+
+
+::selection{
+    background:var(--naranja);
+    color:#fff;
 }

@@ -2,6 +2,9 @@
 
 .navbar{
     width:100%;
+    background:linear-gradient(90deg,rgba(11,61,145,.94),rgba(13,76,179,.94));
+    -webkit-backdrop-filter:blur(12px);
+    backdrop-filter:blur(12px);
     background:linear-gradient(90deg,#0B3D91,#0d4cb3);
     position:sticky;
     top:0;
