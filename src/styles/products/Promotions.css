@@ -4,7 +4,7 @@
 
 .promotions-section {
     padding: 90px 0;
-    background: #eef4fb;
+    background: linear-gradient(180deg,#eaf1fb 0%,#f6f8fc 100%);
 }
 
 .promotions-section .container {
